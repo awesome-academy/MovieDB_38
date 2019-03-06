@@ -1,4 +1,4 @@
-package com.example.filmdictionary;
+package com.ptit.filmdictionary;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

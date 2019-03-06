@@ -1,4 +1,4 @@
-package com.example.filmdictionary;
+package com.ptit.filmdictionary;
 
 import org.junit.Test;
 
