@@ -2,6 +2,7 @@ package com.ptit.filmdictionary.data.source;
 
 import android.databinding.ObservableArrayList;
 
+import com.ptit.filmdictionary.base.BaseRepository;
 import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.local.MovieLocalDataSource;
@@ -11,7 +12,7 @@ import com.ptit.filmdictionary.data.source.remote.response.MovieResponse;
 
 import io.reactivex.Observable;
 
-public class MovieRepository implements MovieDataSource.Local, MovieDataSource.Remote {
+public class MovieRepository extends BaseRepository implements MovieDataSource.Local, MovieDataSource.Remote {
     private static MovieRepository sInstance;
     private MovieRemoteDataSource mRemote;
     private MovieLocalDataSource mLocal;
