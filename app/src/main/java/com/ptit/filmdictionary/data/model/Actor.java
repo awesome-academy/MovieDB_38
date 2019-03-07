@@ -4,46 +4,42 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Actor {
-    @SerializedName("cast_id")
-    @Expose
-    private int mCastId;
-    @SerializedName("credit_id")
-    @Expose
-    private String mCreditId;
     @SerializedName("id")
     @Expose
-    private int mId;
+    private String mId;
+
     @SerializedName("name")
     @Expose
     private String mName;
+
     @SerializedName("profile_path")
     @Expose
     private String mProfilePath;
 
+    @SerializedName("character")
+    @Expose
+    private String mCharater;
+
+    @SerializedName("birthday")
+    @Expose
+    private String mBirthday;
+
+    @SerializedName("biography")
+    @Expose
+    private String mBiography;
+
+    @SerializedName("place_of_birth")
+    @Expose
+    private String mPlace;
+
     public Actor() {
     }
 
-    public int getCastId() {
-        return mCastId;
-    }
-
-    public void setCastId(int castId) {
-        mCastId = castId;
-    }
-
-    public String getCreditId() {
-        return mCreditId;
-    }
-
-    public void setCreditId(String creditId) {
-        mCreditId = creditId;
-    }
-
-    public int getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         mId = id;
     }
 
@@ -61,5 +57,37 @@ public class Actor {
 
     public void setProfilePath(String profilePath) {
         mProfilePath = profilePath;
+    }
+
+    public String getCharater() {
+        return mCharater;
+    }
+
+    public void setCharater(String charater) {
+        mCharater = charater;
+    }
+
+    public String getBirthday() {
+        return mBirthday;
+    }
+
+    public void setBirthday(String birthday) {
+        mBirthday = birthday;
+    }
+
+    public String getBiography() {
+        return mBiography;
+    }
+
+    public void setBiography(String biography) {
+        mBiography = biography;
+    }
+
+    public String getPlace() {
+        return mPlace;
+    }
+
+    public void setPlace(String place) {
+        mPlace = place;
     }
 }
