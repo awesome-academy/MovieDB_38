@@ -44,7 +44,7 @@ public class Movie {
 
     @SerializedName("vote_average")
     @Expose
-    private float mVoteAverage;
+    private double mVoteAverage;
 
     @SerializedName("videos")
     @Expose
@@ -129,11 +129,11 @@ public class Movie {
         mRuntime = runtime;
     }
 
-    public float getVoteAverage() {
+    public double getVoteAverage() {
         return mVoteAverage;
     }
 
-    public void setVoteAverage(float voteAverage) {
+    public void setVoteAverage(double voteAverage) {
         mVoteAverage = voteAverage;
     }
 
