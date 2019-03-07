@@ -54,7 +54,106 @@ public class Movie {
     @Expose
     private CastResult mCastResult;
 
-    private class CastResult {
+    public Movie() {
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int id) {
+        mId = id;
+    }
+
+    public String getBackdropPath() {
+        return mBackdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        mBackdropPath = backdropPath;
+    }
+
+    public List<Genre> getGenres() {
+        return mGenres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        mGenres = genres;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    public String getOverview() {
+        return mOverview;
+    }
+
+    public void setOverview(String overview) {
+        mOverview = overview;
+    }
+
+    public String getPosterPath() {
+        return mPosterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        mPosterPath = posterPath;
+    }
+
+    public List<Company> getProductionCompanies() {
+        return mProductionCompanies;
+    }
+
+    public void setProductionCompanies(List<Company> productionCompanies) {
+        mProductionCompanies = productionCompanies;
+    }
+
+    public String getReleaseDate() {
+        return mReleaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        mReleaseDate = releaseDate;
+    }
+
+    public int getRuntime() {
+        return mRuntime;
+    }
+
+    public void setRuntime(int runtime) {
+        mRuntime = runtime;
+    }
+
+    public float getVoteAverage() {
+        return mVoteAverage;
+    }
+
+    public void setVoteAverage(float voteAverage) {
+        mVoteAverage = voteAverage;
+    }
+
+    public VideoResult getVideoResult() {
+        return mVideoResult;
+    }
+
+    public void setVideoResult(VideoResult videoResult) {
+        mVideoResult = videoResult;
+    }
+
+    public CastResult getCastResult() {
+        return mCastResult;
+    }
+
+    public void setCastResult(CastResult castResult) {
+        mCastResult = castResult;
+    }
+
+    public class CastResult {
         @SerializedName("cast")
         @Expose
         private List<Actor> mActors;
@@ -68,7 +167,7 @@ public class Movie {
         }
     }
 
-    private class VideoResult {
+    public class VideoResult {
         @SerializedName("results")
         @Expose
         private List<Video> mVideos;
