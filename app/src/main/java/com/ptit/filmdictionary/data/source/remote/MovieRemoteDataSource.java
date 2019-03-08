@@ -30,7 +30,7 @@ public class MovieRemoteDataSource implements MovieDataSource.Remote {
     }
 
     @Override
-    public Observable<MovieResponse> getMoviesByCatetgory(String categoryType, int page) {
+    public Observable<MovieResponse> getMoviesByCategory(String categoryType, int page) {
         return mApiRequest.getMoviesByCategory(categoryType, page);
     }
 

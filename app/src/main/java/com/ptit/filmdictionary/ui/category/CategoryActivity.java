@@ -3,8 +3,13 @@ package com.ptit.filmdictionary.ui.category;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,24 +23,25 @@ import com.ptit.filmdictionary.databinding.ActivityCategoryBinding;
 
 import java.util.ArrayList;
 
-public class CategoryActivity extends AppCompatActivity implements CategoryNavigator {
+public class CategoryActivity extends AppCompatActivity implements CategoryNavigator,
+        CategoryAdapter.ItemClickListener {
     public static final String BUNDLE_CATEGORY_KEY = "BUNDLE_CATEGORY_KEY";
     public static final String EXTRA_AGRS = "com.ptit.filmdictionary.extras.EXTRA_ARGS";
     private static final String BUNDLE_CATEGORY_TITLE = "BUNDLE_CATEGORY_TITLE";
-    private String mCategoryTitle;
-    private CategoryViewModel mViewModel;
+    protected String mActionBarTitle;
+    protected CategoryViewModel mViewModel;
     private ActivityCategoryBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_category);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            setTextStatusBarColor();
+        }
         initViewModel();
         initActionBar();
-        mBinding.setViewModel(mViewModel);
-        setUpAdapter();
-
-        mViewModel.loadMoviesByCategory(mViewModel.getPage());
+        setUpRecycler();
     }
 
     @Override
@@ -48,6 +54,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
+                //Todo: start activity Search
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -57,28 +64,41 @@ public class CategoryActivity extends AppCompatActivity implements CategoryNavig
 
     private void initActionBar() {
         setSupportActionBar(mBinding.toolbarCategory);
-        getSupportActionBar().setTitle(mCategoryTitle);
+        getSupportActionBar().setTitle(mActionBarTitle);
         mBinding.toolbarCategory.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
-        mBinding.toolbarCategory.setNavigationOnClickListener(new View.OnClickListener() {
+        mBinding.toolbarCategory.setNavigationOnClickListener(v -> onBackPressed());
+    }
+
+    protected void setUpRecycler() {
+        final CategoryAdapter adapter = new CategoryAdapter(new ArrayList<Movie>(), this);
+        mBinding.recyclerMovies.setAdapter(adapter);
+
+        mBinding.recyclerMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager manager
+                        = (LinearLayoutManager) mBinding.recyclerMovies.getLayoutManager();
+                if (manager.findLastCompletelyVisibleItemPosition() == adapter.getItemCount() - 1) {
+                    //bottom of list!
+                    hideLoadMore(false);
+                    int nextPage = mViewModel.getPage();
+                    ++nextPage;
+                    mViewModel.loadMoviesByCategory(nextPage);
+                }
             }
         });
     }
 
-    private void setUpAdapter() {
-        CategoryAdapter adapter = new CategoryAdapter(new ArrayList<Movie>());
-        mBinding.recyclerMovies.setAdapter(adapter);
-    }
-
-    private void initViewModel() {
+    protected void initViewModel() {
         Bundle bundle = getIntent().getBundleExtra(EXTRA_AGRS);
         String categoryKey = bundle.getString(BUNDLE_CATEGORY_KEY);
-        mCategoryTitle = bundle.getString(BUNDLE_CATEGORY_TITLE);
+        mActionBarTitle = bundle.getString(BUNDLE_CATEGORY_TITLE);
         mViewModel = new CategoryViewModel(categoryKey,
                 MovieRepository.getInstance(MovieRemoteDataSource.getInstance(this),
                         MovieLocalDataSource.getInstance(this)), this);
+
+        mBinding.setViewModel(mViewModel);
+        mViewModel.loadMoviesByCategory(mViewModel.getPage());
     }
 
     public static Intent getInstance(Context context, String categoryKey, String categoryTitle) {
@@ -100,5 +120,21 @@ public class CategoryActivity extends AppCompatActivity implements CategoryNavig
     public void hideLoadMore(boolean hide) {
         if (hide) mBinding.progressLoadMore.setVisibility(View.GONE);
         else mBinding.progressLoadMore.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mViewModel.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onItemMovieClick(Movie movie) {
+        //TODO : start activity MovieDetail
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setTextStatusBarColor() {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 }
