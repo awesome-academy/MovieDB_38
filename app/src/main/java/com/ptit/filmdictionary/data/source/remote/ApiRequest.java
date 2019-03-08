@@ -13,7 +13,7 @@ public interface ApiRequest {
     @GET("genre/movie/list")
     Observable<GenreResponse> getGenres();
 
-    @GET("{type}")
+    @GET("movie/{type}")
     Observable<MovieResponse> getMoviesByCategory(@Path("type") String type,
                                                   @Query("page") int page);
 
