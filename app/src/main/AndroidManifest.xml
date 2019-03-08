@@ -11,8 +11,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.category.CategoryActivity" />
+
         <activity
-            android:name="com.ptit.filmdictionary.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
