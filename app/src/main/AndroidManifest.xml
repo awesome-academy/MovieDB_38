@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.producer.ProducerActivity" />
         <activity android:name=".ui.genre.GenreActivity" />
         <activity android:name=".ui.category.CategoryActivity" />
         <activity
