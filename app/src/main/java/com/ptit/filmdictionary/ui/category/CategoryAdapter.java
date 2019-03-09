@@ -62,7 +62,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             super(itemView.getRoot());
             mBinding = itemView;
             mListener = listener;
-            mBinding.getRoot().setOnClickListener( v -> mListener.onItemMovieClick(mMovie));
+            mBinding.getRoot().setOnClickListener(v -> mListener.onItemMovieClick(mMovie));
         }
 
         public void bindData(Movie movie) {
@@ -76,7 +76,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
-    interface ItemClickListener {
+    public interface ItemClickListener {
         void onItemMovieClick(Movie movie);
     }
 }
