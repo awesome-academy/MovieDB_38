@@ -5,44 +5,55 @@ import android.databinding.ObservableList;
 
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.MovieRepository;
-import com.ptit.filmdictionary.data.source.remote.response.MovieResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class CategoryViewModel {
     private static final int DEFAULT_PAGE = 1;
     public final ObservableList<Movie> mMovies = new ObservableArrayList<>();
     private int mPage;
-    private String mCategoryType;
+    private String mCategoryKey;
+    private String mGenreKey;
     private MovieRepository mMovieRepository;
     private CompositeDisposable mCompositeDisposable;
     private CategoryNavigator mNavigator;
 
-    public CategoryViewModel(String categoryType, MovieRepository movieRepository, CategoryNavigator navigator) {
-        mCategoryType = categoryType;
+    public CategoryViewModel(MovieRepository movieRepository, CategoryNavigator navigator) {
         mMovieRepository = movieRepository;
         mNavigator = navigator;
         mPage = DEFAULT_PAGE;
         mCompositeDisposable = new CompositeDisposable();
     }
 
+    public String getCategoryKey() {
+        return mCategoryKey;
+    }
+
+    public void setCategoryKey(String categoryKey) {
+        mCategoryKey = categoryKey;
+    }
+
+    public String getGenreKey() {
+        return mGenreKey;
+    }
+
+    public void setGenreKey(String genreKey) {
+        mGenreKey = genreKey;
+    }
+
     public void loadMoviesByCategory(int page) {
         mPage = page;
-        Disposable disposable = mMovieRepository.getMoviesByCategory(mCategoryType, page)
+        Disposable disposable = mMovieRepository.getMoviesByCategory(mCategoryKey, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<MovieResponse>() {
-                    @Override
-                    public void accept(MovieResponse movieResponse) throws Exception {
-                        mMovies.clear();
-                        mMovies.addAll(movieResponse.getResults());
-                        mNavigator.hideLoadData(true);
-                        mNavigator.hideLoadMore(true);
-                    }
+                .subscribe(movieResponse -> {
+                    mMovies.clear();
+                    mMovies.addAll(movieResponse.getResults());
+                    mNavigator.hideLoadData(true);
+                    mNavigator.hideLoadMore(true);
                 });
         mCompositeDisposable.add(disposable);
     }
@@ -55,4 +66,17 @@ public class CategoryViewModel {
         return mPage;
     }
 
+    public void loadMoviesByGenre(int page) {
+        mPage = page;
+        Disposable disposable = mMovieRepository.getMoviesByGenre(mGenreKey, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> {
+                    mMovies.clear();
+                    mMovies.addAll(movieResponse.getResults());
+                    mNavigator.hideLoadData(true);
+                    mNavigator.hideLoadMore(true);
+                });
+        mCompositeDisposable.add(disposable);
+    }
 }
