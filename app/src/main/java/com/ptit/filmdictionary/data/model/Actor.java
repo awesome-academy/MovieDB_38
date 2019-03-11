@@ -32,6 +32,14 @@ public class Actor {
     @Expose
     private String mPlace;
 
+    @SerializedName("popularity")
+    @Expose
+    private String mPopularity;
+
+    @SerializedName("gender")
+    @Expose
+    private String mGender;
+
     public Actor() {
     }
 
@@ -89,5 +97,21 @@ public class Actor {
 
     public void setPlace(String place) {
         mPlace = place;
+    }
+
+    public String getPopularity() {
+        return mPopularity;
+    }
+
+    public void setPopularity(String popularity) {
+        mPopularity = popularity;
+    }
+
+    public String getGender() {
+        return mGender;
+    }
+
+    public void setGender(String gender) {
+        mGender = gender;
     }
 }
