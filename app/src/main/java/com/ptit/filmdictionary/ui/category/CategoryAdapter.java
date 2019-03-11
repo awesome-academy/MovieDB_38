@@ -16,9 +16,11 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private List<Movie> mMovies;
+    private ItemClickListener mListener;
 
-    public CategoryAdapter(List<Movie> movies) {
+    public CategoryAdapter(List<Movie> movies, ItemClickListener listener) {
         mMovies = movies;
+        mListener = listener;
     }
 
     @NonNull
@@ -27,7 +29,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         ItemRecyclerCategoryLayoutBinding binding =
                 DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()),
                         R.layout.item_recycler_category_layout, viewGroup, false);
-        return new ViewHolder(binding);
+        return new ViewHolder(binding, mListener);
     }
 
     @Override
@@ -41,8 +43,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public void addMovies(List<Movie> movies) {
+        int position = mMovies.size();
         mMovies.addAll(movies);
-        notifyDataSetChanged();
+        notifyItemInserted(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -52,13 +55,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public final ObservableField<String> mOverview = new ObservableField<>();
         public final ObservableField<String> mPosterPath = new ObservableField<>();
         private ItemRecyclerCategoryLayoutBinding mBinding;
+        private Movie mMovie;
+        private ItemClickListener mListener;
 
-        public ViewHolder(ItemRecyclerCategoryLayoutBinding itemView) {
+        public ViewHolder(ItemRecyclerCategoryLayoutBinding itemView, ItemClickListener listener) {
             super(itemView.getRoot());
             mBinding = itemView;
+            mListener = listener;
+            mBinding.getRoot().setOnClickListener( v -> mListener.onItemMovieClick(mMovie));
         }
 
         public void bindData(Movie movie) {
+            mMovie = movie;
             if (mBinding.getViewHolder() == null) mBinding.setViewHolder(this);
             mTitle.set(movie.getTitle());
             mVoteAverage.set((float) movie.getVoteAverage());
@@ -66,5 +74,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             mOverview.set(movie.getOverview());
             mPosterPath.set(movie.getPosterPath());
         }
+    }
+
+    interface ItemClickListener {
+        void onItemMovieClick(Movie movie);
     }
 }

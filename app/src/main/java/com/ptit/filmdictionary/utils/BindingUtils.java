@@ -6,7 +6,7 @@ import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
 
@@ -20,8 +20,10 @@ public class BindingUtils {
 
     @BindingAdapter("bindImage")
     public static void bindPoster(ImageView imageView, ObservableField<String> image_path) {
-        Glide.with(imageView)
+        GlideApp.with(imageView)
                 .load(StringUtils.getSmallImage(image_path.get()))
+                .thumbnail(GlideApp.with(imageView).load(R.drawable.preloader))
+                .error(R.drawable.no_image)
                 .into(imageView);
     }
 }

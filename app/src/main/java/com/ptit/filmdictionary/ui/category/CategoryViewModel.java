@@ -31,14 +31,17 @@ public class CategoryViewModel {
     }
 
     public void loadMoviesByCategory(int page) {
-        Disposable disposable = mMovieRepository.getMoviesByCatetgory(mCategoryType, page)
+        mPage = page;
+        Disposable disposable = mMovieRepository.getMoviesByCategory(mCategoryType, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<MovieResponse>() {
                     @Override
                     public void accept(MovieResponse movieResponse) throws Exception {
+                        mMovies.clear();
                         mMovies.addAll(movieResponse.getResults());
                         mNavigator.hideLoadData(true);
+                        mNavigator.hideLoadMore(true);
                     }
                 });
         mCompositeDisposable.add(disposable);
@@ -52,7 +55,4 @@ public class CategoryViewModel {
         return mPage;
     }
 
-    public void setPage(int page) {
-        mPage = page;
-    }
 }

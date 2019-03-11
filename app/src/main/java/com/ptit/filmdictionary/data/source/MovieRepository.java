@@ -55,8 +55,8 @@ public class MovieRepository implements MovieDataSource.Local, MovieDataSource.R
     }
 
     @Override
-    public Observable<MovieResponse> getMoviesByCatetgory(String categoryType, int page) {
-        return mRemote.getMoviesByCatetgory(categoryType, page);
+    public Observable<MovieResponse> getMoviesByCategory(String categoryType, int page) {
+        return mRemote.getMoviesByCategory(categoryType, page);
     }
 
     @Override
