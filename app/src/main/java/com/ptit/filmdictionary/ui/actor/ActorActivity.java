@@ -92,4 +92,8 @@ public class ActorActivity extends AppCompatActivity {
     public void onSearchClick(View view) {
         //Todo : start search activity
     }
+
+    public String getActorId() {
+        return mActor.getId();
+    }
 }

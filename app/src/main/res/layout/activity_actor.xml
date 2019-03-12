@@ -29,7 +29,7 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/color_white"
                 app:expandedTitleTextAppearance="@android:color/transparent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"

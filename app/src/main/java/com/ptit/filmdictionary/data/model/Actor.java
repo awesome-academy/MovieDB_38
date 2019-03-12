@@ -43,6 +43,10 @@ public class Actor implements Parcelable {
     @Expose
     private String mGender;
 
+    @SerializedName("known_for_department")
+    @Expose
+    private String mDepartment;
+
     public Actor() {
     }
 
@@ -122,6 +126,14 @@ public class Actor implements Parcelable {
 
     public void setGender(String gender) {
         mGender = gender;
+    }
+
+    public String getDepartment() {
+        return mDepartment;
+    }
+
+    public void setDepartment(String department) {
+        mDepartment = department;
     }
 
     @Override
