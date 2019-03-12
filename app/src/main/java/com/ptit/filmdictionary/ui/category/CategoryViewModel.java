@@ -17,6 +17,7 @@ public class CategoryViewModel {
     private int mPage;
     private String mCategoryKey;
     private String mGenreKey;
+    private int mProducerKey;
     private MovieRepository mMovieRepository;
     private CompositeDisposable mCompositeDisposable;
     private CategoryNavigator mNavigator;
@@ -42,6 +43,14 @@ public class CategoryViewModel {
 
     public void setGenreKey(String genreKey) {
         mGenreKey = genreKey;
+    }
+
+    public int getProducerKey() {
+        return mProducerKey;
+    }
+
+    public void setProducerKey(int producerKey) {
+        mProducerKey = producerKey;
     }
 
     public void loadMoviesByCategory(int page) {
@@ -79,4 +88,19 @@ public class CategoryViewModel {
                 });
         mCompositeDisposable.add(disposable);
     }
+
+    public void loadMoviesByProducer(int page) {
+        mPage = page;
+        Disposable disposable = mMovieRepository.getMoviesByCompany(mProducerKey, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieResponse -> {
+                    mMovies.clear();
+                    mMovies.addAll(movieResponse.getResults());
+                    mNavigator.hideLoadData(true);
+                    mNavigator.hideLoadMore(true);
+                });
+        mCompositeDisposable.add(disposable);
+    }
+
 }
