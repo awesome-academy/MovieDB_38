@@ -4,8 +4,11 @@ import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
@@ -24,6 +27,24 @@ public class BindingUtils {
                 .load(StringUtils.getSmallImage(image_path.get()))
                 .thumbnail(GlideApp.with(imageView).load(R.drawable.preloader))
                 .error(R.drawable.no_image)
+                .into(imageView);
+    }
+
+    @BindingAdapter("bindImage")
+    public static void bindPoster(ImageView imageView, String image_path) {
+        GlideApp.with(imageView)
+                .load(StringUtils.getImage(image_path))
+                .thumbnail(GlideApp.with(imageView).load(R.drawable.preloader))
+                .error(R.drawable.no_image)
+                .into(imageView);
+    }
+
+    @BindingAdapter("bindAvatar")
+    public static void bindAvatar(ImageView imageView, String image_path) {
+        Log.d("aaa", "bindAvatar: ");
+        GlideApp.with(imageView)
+                .load(StringUtils.getSmallImage(image_path))
+                .transforms(new CenterCrop(), new RoundedCorners(10))
                 .into(imageView);
     }
 }

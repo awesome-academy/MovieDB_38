@@ -2,6 +2,7 @@ package com.ptit.filmdictionary.data.source.remote;
 
 import android.content.Context;
 
+import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.MovieDataSource;
 import com.ptit.filmdictionary.data.source.remote.response.GenreResponse;
@@ -57,5 +58,10 @@ public class MovieRemoteDataSource implements MovieDataSource.Remote {
     @Override
     public Observable<MovieResponse> searchMovieByName(String key, int page) {
         return mApiRequest.searchMovieByName(key, page);
+    }
+
+    @Override
+    public Observable<Actor> getProfile(String actorId) {
+        return mApiRequest.getProfile(actorId);
     }
 }

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="actor"
+            type="com.ptit.filmdictionary.data.model.Actor" />
+    </data>
+
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +17,7 @@
         tools:context=".ui.actor.ActorActivity">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_400"
             android:fitsSystemWindows="true">
@@ -41,6 +49,7 @@
 
                     <ImageView
                         android:id="@+id/image_background_actor"
+                        bindImage="@{actor.profilePath}"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@color/color_dark_gray"
@@ -56,6 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_10"
                         android:elevation="@dimen/dp_2"
+                        android:text="@{actor.name}"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/sp_26"
                         android:textStyle="bold"
@@ -65,9 +75,11 @@
 
                     <ImageView
                         android:id="@+id/image_actor"
+                        bindAvatar="@{actor.profilePath}"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:elevation="@dimen/dp_2"
+                        android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toStartOf="@id/line_two"
@@ -80,14 +92,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.35" />
+                        app:layout_constraintGuide_percent="0.3" />
 
                     <android.support.constraint.Guideline
                         android:id="@+id/line_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.65" />
+                        app:layout_constraintGuide_percent="0.7" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -95,51 +107,55 @@
                     android:id="@+id/toolbar_actor"
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
-                    android:fitsSystemWindows="true"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin">
+
+                    <ImageView
+                        android:id="@+id/image_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:padding="@dimen/dp_8"
+                        android:onClick="onSearchClick"
+                        android:src="@drawable/ic_search" />
+                </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout_actor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tab_layout_actor"
-                    android:layout_width="0dp"
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tab_info"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:text="@string/tab_information" />
 
-                    <android.support.design.widget.TabItem
-                        android:id="@+id/tab_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tab_information" />
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tab_movies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_movies" />
 
-                    <android.support.design.widget.TabItem
-                        android:id="@+id/tab_movies"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tab_movies" />
+            </android.support.design.widget.TabLayout>
 
-                </android.support.design.widget.TabLayout>
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/view_pager"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tab_layout_actor" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v4.widget.NestedScrollView>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab_layout_actor" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
