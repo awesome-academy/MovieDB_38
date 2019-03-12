@@ -1,5 +1,6 @@
 package com.ptit.filmdictionary.data.source.remote;
 
+import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.remote.response.GenreResponse;
 import com.ptit.filmdictionary.data.source.remote.response.MovieResponse;
@@ -35,4 +36,7 @@ public interface ApiRequest {
     @GET("search/movie")
     Observable<MovieResponse> searchMovieByName(@Query("query") String key,
                                                 @Query("page") int page);
+
+    @GET("person/{actor_id}")
+    Observable<Actor> getProfile(@Path("actor_id") String actorId);
 }

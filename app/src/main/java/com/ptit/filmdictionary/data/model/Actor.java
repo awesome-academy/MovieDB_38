@@ -1,9 +1,12 @@
 package com.ptit.filmdictionary.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Actor {
+public class Actor implements Parcelable {
     @SerializedName("id")
     @Expose
     private String mId;
@@ -41,6 +44,12 @@ public class Actor {
     private String mGender;
 
     public Actor() {
+    }
+
+    private Actor(Parcel source) {
+        mId = source.readString();
+        mName = source.readString();
+        mProfilePath = source.readString();
     }
 
     public String getId() {
@@ -114,4 +123,28 @@ public class Actor {
     public void setGender(String gender) {
         mGender = gender;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mId);
+        dest.writeString(mName);
+        dest.writeString(mProfilePath);
+    }
+
+    public static final Creator<Actor> CREATOR = new Creator<Actor>() {
+        @Override
+        public Actor createFromParcel(Parcel source) {
+            return new Actor(source);
+        }
+
+        @Override
+        public Actor[] newArray(int size) {
+            return new Actor[size];
+        }
+    };
 }

@@ -2,6 +2,7 @@ package com.ptit.filmdictionary.data.source;
 
 import android.databinding.ObservableArrayList;
 
+import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.remote.response.GenreResponse;
 import com.ptit.filmdictionary.data.source.remote.response.MovieResponse;
@@ -33,5 +34,7 @@ public interface MovieDataSource {
         Observable<Movie> getMovieDetail(int idMovie);
 
         Observable<MovieResponse> searchMovieByName(String key, int page);
+
+        Observable<Actor> getProfile(String actorId);
     }
 }

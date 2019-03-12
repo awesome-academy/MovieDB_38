@@ -2,6 +2,7 @@ package com.ptit.filmdictionary.data.source;
 
 import android.databinding.ObservableArrayList;
 
+import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.local.MovieLocalDataSource;
 import com.ptit.filmdictionary.data.source.remote.MovieRemoteDataSource;
@@ -82,5 +83,10 @@ public class MovieRepository implements MovieDataSource.Local, MovieDataSource.R
     @Override
     public Observable<MovieResponse> searchMovieByName(String key, int page) {
         return mRemote.searchMovieByName(key, page);
+    }
+
+    @Override
+    public Observable<Actor> getProfile(String actorId) {
+        return mRemote.getProfile(actorId);
     }
 }
