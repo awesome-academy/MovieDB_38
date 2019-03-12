@@ -13,4 +13,6 @@
     <dimen name="dp_110">110dp</dimen>
     <dimen name="dp_130">130dp</dimen>
     <dimen name="dp_160">160dp</dimen>
+    <dimen name="dp_400">400dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
 </resources>
