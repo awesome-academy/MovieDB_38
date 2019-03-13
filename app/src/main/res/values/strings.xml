@@ -7,11 +7,11 @@
     <string name="text_genres">Genres</string>
     <string name="tab_information">Information</string>
     <string name="tab_movies">Movies</string>
-    <string name="title_name">Name :</string>
-    <string name="titlt_gender">Gender :</string>
-    <string name="title_birthday">Birthday :</string>
-    <string name="title_place_of_birth">Place Of Birth :</string>
-    <string name="title_department">Department :</string>
-    <string name="title_biography">Biography :</string>
+    <string name="title_name">Name:</string>
+    <string name="titlt_gender">Gender:</string>
+    <string name="title_birthday">Birthday:</string>
+    <string name="title_place_of_birth">Place of Birth:</string>
+    <string name="title_department">Department:</string>
+    <string name="title_biography">Biography:</string>
     <string name="title_popularity">Popularity</string>
 </resources>
