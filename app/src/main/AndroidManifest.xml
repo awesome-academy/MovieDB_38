@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.movie_detail.MovieDetailActivity" />
         <activity android:name=".ui.actor.ActorActivity" />
         <activity android:name=".ui.producer.ProducerActivity" />
         <activity android:name=".ui.genre.GenreActivity" />
