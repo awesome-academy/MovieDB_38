@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:indeterminateTint="@color/color_black" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/view_contet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_primary_dark"
+            android:padding="@dimen/dp_4"
+            tools:context=".ui.movie_detail.info.MovieInfoFragment">
+
+            <View
+                android:id="@+id/view_one"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_round_conner_white"
+                android:padding="@dimen/dp_4"
+                app:layout_constraintBottom_toBottomOf="@id/text_release_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_name"
+                style="@style/LabelInforActor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_26"
+                app:layout_constraintStart_toStartOf="@id/view_one"
+                app:layout_constraintTop_toTopOf="@id/view_one" />
+
+            <TextView
+                android:id="@+id/text_runtime"
+                style="@style/LabelInforActor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/text_name"
+                app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+            <TextView
+                android:id="@+id/text_release_date"
+                style="@style/LabelInforActor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/text_name"
+                app:layout_constraintTop_toBottomOf="@id/text_runtime" />
+
+            <ImageView
+                android:id="@+id/image_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/ic_favorite_24dp"
+                app:layout_constraintBottom_toBottomOf="@id/view_one"
+                app:layout_constraintEnd_toEndOf="@id/view_one"
+                app:layout_constraintTop_toTopOf="@id/view_one" />
+
+            <ProgressBar
+                android:id="@+id/progress_vote"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:background="@drawable/custom_progressbar_bg"
+                android:max="10"
+                android:progressDrawable="@drawable/custom_progressbar_drawable"
+                app:layout_constraintBottom_toBottomOf="@id/image_favorite"
+                app:layout_constraintEnd_toStartOf="@id/image_favorite"
+                app:layout_constraintTop_toTopOf="@id/image_favorite" />
+
+            <TextView
+                android:id="@+id/text_vote_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/progress_vote"
+                app:layout_constraintEnd_toEndOf="@id/progress_vote"
+                app:layout_constraintStart_toStartOf="@id/progress_vote"
+                app:layout_constraintTop_toTopOf="@id/progress_vote" />
+
+            <View
+                android:id="@+id/view_two"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/bg_round_conner_white"
+                app:layout_constraintBottom_toBottomOf="@id/text_overview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_one" />
+
+            <TextView
+                android:id="@+id/label_overview"
+                style="@style/LabelInforActor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_star"
+                android:textSize="@dimen/sp_26"
+                app:layout_constraintStart_toStartOf="@id/view_two"
+                app:layout_constraintTop_toTopOf="@id/view_two" />
+
+            <TextView
+                android:id="@+id/text_overview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_8"
+                app:layout_constraintEnd_toEndOf="@id/view_two"
+                app:layout_constraintStart_toStartOf="@id/view_two"
+                app:layout_constraintTop_toBottomOf="@id/label_overview" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_genre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/bg_round_conner_white"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_4"
+                app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_two"
+                app:spanCount="1" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</layout>
