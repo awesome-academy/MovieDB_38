@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.databinding.ObservableList" />
+
+        <import type="com.ptit.filmdictionary.data.model.Movie" />
+
+        <variable
+            name="categoryMovies"
+            type="ObservableList&lt;Movie&gt;" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white">
+
+        <TextView
+            android:id="@+id/text_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/sp_26"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/text_category"
+            app:layout_constraintStart_toEndOf="@id/text_category"
+            app:layout_constraintTop_toTopOf="@id/text_category" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_movie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:bindCategoryMovies="@{categoryMovies}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/text_category"
+            app:layout_constraintTop_toBottomOf="@id/text_category" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/color_light_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_movie" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.ptit.filmdictionary.ui.home.HomeViewModel"/>
+            type="com.ptit.filmdictionary.ui.home.HomeViewModel" />
 
     </data>
 
@@ -37,7 +37,8 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -74,6 +75,9 @@
                     android:id="@+id/recycler_category"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:bindCategoryMovie="@{viewModel.categoryMoviesObservable}"
+                    app:bindCategoryTitle="@{viewModel.categoryTitleObservable}"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +86,6 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_5"
                     android:background="@color/color_white"
                     android:paddingStart="@dimen/dp_10"
                     app:layout_constraintEnd_toEndOf="parent"
