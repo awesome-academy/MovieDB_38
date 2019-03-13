@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ptit.filmdictionary.R;
-import com.ptit.filmdictionary.ui.home.SlideAdapter;
+import com.ptit.filmdictionary.ui.home.MainAdapter;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private static final int FRAGMENT_HOME = 1;
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void initViewPager() {
-        SlideAdapter slideAdapter = new SlideAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(slideAdapter);
+        MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mainAdapter);
     }
 
     private void registerEvents() {
