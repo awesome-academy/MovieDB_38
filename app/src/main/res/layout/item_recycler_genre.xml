@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ptit.filmdictionary.ui.movie_detail.info.ItemRecyclerGenreViewModel" />
+    </data>
+
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
@@ -10,14 +17,21 @@
             style="@style/TextViewInforActor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_4"
             android:background="@drawable/bg_round_conner_border"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_4"
             android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_4"
+            android:text="@{viewModel.mGenre.name}"
             android:textColor="@color/color_white"
             android:textSize="@dimen/sp_16"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
