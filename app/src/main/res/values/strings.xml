@@ -14,4 +14,7 @@
     <string name="title_department">Department:</string>
     <string name="title_biography">Biography:</string>
     <string name="title_popularity">Popularity</string>
+    <string name="tab_trailer">Trailer</string>
+    <string name="tab_actor">Actor</string>
+    <string name="tab_producer">Producer</string>
 </resources>
