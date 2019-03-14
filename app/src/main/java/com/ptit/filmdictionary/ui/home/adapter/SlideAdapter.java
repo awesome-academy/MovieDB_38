@@ -18,10 +18,19 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
     private ObservableList<Movie> mMovies;
     private SlideListener mListener;
     private ItemSlideBinding mBinding;
+    private int mCurrentSlide;
 
     public SlideAdapter(SlideListener listener) {
         mListener = listener;
         mMovies = new ObservableArrayList<>();
+    }
+
+    public int getCurrentSlide() {
+        return mCurrentSlide;
+    }
+
+    public void setCurrentSlide(int currentSlide) {
+        mCurrentSlide = currentSlide;
     }
 
     @Override
@@ -50,6 +59,7 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
             mBinding.setViewModel(new ItemMovieViewModel());
         }
         mBinding.getViewModel().setMovie(mMovies.get(position));
+        mCurrentSlide = position;
         mBinding.imageSlide.setOnClickListener(this);
         mBinding.executePendingBindings();
         return mBinding.getRoot();

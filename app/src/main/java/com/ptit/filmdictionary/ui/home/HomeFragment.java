@@ -1,14 +1,13 @@
 package com.ptit.filmdictionary.ui.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ptit.filmdictionary.BR;
 import com.ptit.filmdictionary.R;
@@ -24,16 +23,27 @@ import com.ptit.filmdictionary.ui.category.CategoryActivity;
 import com.ptit.filmdictionary.ui.genre.GenreActivity;
 import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
+import com.ptit.filmdictionary.ui.movie_detail.MovieDetailActivity;
+import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
 import com.ptit.filmdictionary.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements HomeNavigator,
         HomeCategoryAdapter.CategoryListener, View.OnClickListener, SlideAdapter.SlideListener,
-        ViewPager.OnPageChangeListener {
+        ViewPager.OnPageChangeListener, GenreRecylerAdapter.ItemClickListener {
     private static final CharSequence TITTLE_SPACE = " ";
     private static final int DEFAULT_SCROLL_RANGE = -1;
+    private static final int NUM_SLIDE = 5;
+    private static final long PERIOD_TIME_SLIDE = 3000;
+    private static final long DELAY_TIME_SLIDE = 100;
     private static HomeFragment sInstance;
     private HomeViewModel mHomeViewModel;
     private FragmentHomeBinding mFragmentHomeBinding;
+    private SlideAdapter mSlideAdapter;
+    private int mCurrentSlide;
 
     @Override
     protected HomeViewModel getViewModel() {
@@ -65,11 +75,32 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     private void initAdapter() {
-        mFragmentHomeBinding.viewPager.setAdapter(new SlideAdapter(this));
+        mSlideAdapter = new SlideAdapter(this);
+        mFragmentHomeBinding.viewPager.setAdapter(mSlideAdapter);
         mFragmentHomeBinding.viewPager.addOnPageChangeListener(this);
+        mCurrentSlide = mSlideAdapter.getCurrentSlide();
+        initTimerChangeSlide();
         mFragmentHomeBinding.tabLayout.setupWithViewPager(mFragmentHomeBinding.viewPager, true);
         mFragmentHomeBinding.recyclerCategory.setAdapter(new HomeCategoryAdapter(this));
         mFragmentHomeBinding.recyclerCategory.setNestedScrollingEnabled(false);
+        mFragmentHomeBinding.recyclerGenre.setAdapter(new GenreRecylerAdapter(new ArrayList<>(), this));
+    }
+
+    private void initTimerChangeSlide() {
+        Handler handler = new Handler();
+        Runnable update = () -> {
+            if (mCurrentSlide == NUM_SLIDE) {
+                mCurrentSlide = 0;
+            }
+            mFragmentHomeBinding.viewPager.setCurrentItem(mCurrentSlide++, true);
+        };
+        new Timer().schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, DELAY_TIME_SLIDE, PERIOD_TIME_SLIDE);
     }
 
     @Override
@@ -127,7 +158,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void startMovieDetailActivity(Movie movie) {
-
+        startActivity(MovieDetailActivity.getIntent(getActivity(), movie.getId(), movie.getTitle()));
     }
 
     @Override
@@ -156,6 +187,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     @Override
+    public void onMovieClick(Movie movie) {
+        startMovieDetailActivity(movie);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.text_genres:
@@ -173,7 +209,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void onSlideClickListener(Movie movie) {
-
+        startMovieDetailActivity(movie);
     }
 
     @Override
@@ -183,11 +219,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void onPageSelected(int i) {
-
+        mCurrentSlide = i;
     }
 
     @Override
     public void onPageScrollStateChanged(int i) {
 
+    }
+
+    @Override
+    public void onItemClick(Genre genre) {
+        startGenreActivity(genre.getId(), genre.getName());
     }
 }

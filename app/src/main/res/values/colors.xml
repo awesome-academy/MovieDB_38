@@ -7,6 +7,6 @@
     <color name="color_black">#000000</color>
     <color name="color_dark_gray">#555555</color>
     <color name="color_light_gray">#D6D6D6</color>
-    <color name="color_transparent_black">#41000000</color>
+    <color name="color_transparent_black">#3B000000</color>
     <color name="color_star">#FF9800</color>
 </resources>
