@@ -14,13 +14,8 @@
     <string name="title_department">Department:</string>
     <string name="title_biography">Biography:</string>
     <string name="title_popularity">Popularity</string>
-    <string name="tab_trailer">Trailer</string>
-    <string name="tab_actor">Actor</string>
-    <string name="tab_producer">Producer</string>
     <string name="label_minutes">minutes</string>
     <string name="label_overview">Overview</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_empty">EMPTY</string>
+    <string name="label_charater">as</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.ptit.filmdictionary.utils;
 
 import android.databinding.BindingAdapter;
-import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
@@ -12,6 +11,7 @@ import android.widget.ProgressBar;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ptit.filmdictionary.R;
+import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.model.Video;
@@ -19,6 +19,7 @@ import com.ptit.filmdictionary.ui.category.CategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.MovieAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
+import com.ptit.filmdictionary.ui.movie_detail.casts.CastsRecyclerAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerRecyclerAdapter;
 
@@ -45,9 +46,9 @@ public class BindingUtils {
     }
 
     @BindingAdapter("bindSmallImage")
-    public static void bindPoster(ImageView imageView, ObservableField<String> image_path) {
+    public static void bindSmallImage(ImageView imageView, String image_path) {
         GlideApp.with(imageView)
-                .load(StringUtils.getSmallImage(image_path.get()))
+                .load(StringUtils.getSmallImage(image_path))
                 .thumbnail(GlideApp.with(imageView).load(R.drawable.preloader))
                 .error(R.drawable.no_image)
                 .into(imageView);
@@ -57,7 +58,6 @@ public class BindingUtils {
     public static void bindPoster(ImageView imageView, String image_path) {
         GlideApp.with(imageView)
                 .load(StringUtils.getImage(image_path))
-                .thumbnail(GlideApp.with(imageView).load(R.drawable.preloader))
                 .error(R.drawable.no_image)
                 .into(imageView);
     }
@@ -118,5 +118,11 @@ public class BindingUtils {
                 .thumbnail(GlideApp.with(thumbnailView).load(R.drawable.preloader))
                 .error(R.drawable.no_image)
                 .into(thumbnailView);
+    }
+
+    @BindingAdapter("app:bindCasts")
+    public static void setAdapterRecyclerCasts(RecyclerView recyclerView, List<Actor> actors) {
+        CastsRecyclerAdapter adapter = (CastsRecyclerAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setActors(actors);
     }
 }
