@@ -2,11 +2,15 @@ package com.ptit.filmdictionary.ui.movie_detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.source.MovieRepository;
@@ -14,8 +18,10 @@ import com.ptit.filmdictionary.data.source.local.MovieLocalDataSource;
 import com.ptit.filmdictionary.data.source.remote.MovieRemoteDataSource;
 import com.ptit.filmdictionary.databinding.ActivityMovieDetailBinding;
 import com.ptit.filmdictionary.ui.movie_detail.info.MovieInfoFragment;
+import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerFragment;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity
+        implements OnTrailerListener {
 
     private static final String BUNDLE_MOVIE_ID = "BUNDLE_MOVIE_ID";
     private static final String EXTRA_MOVIE_DETAIL = "com.ptit.filmdictionary.extras.EXTRA_MOVIE_DETAIL";
@@ -25,34 +31,45 @@ public class MovieDetailActivity extends AppCompatActivity {
     private MovieDetailViewModel mViewModel;
     private ActivityMovieDetailBinding mBinding;
     private MoviePageAdapter mPageAdapter;
+    private YoutubeFragment mYoutubeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            setTextStatusBarColor();
+        }
         recieveData();
         initActionBar();
         initViewModel();
         initViewPager();
+        mYoutubeFragment = (YoutubeFragment) getFragmentManager().findFragmentById(R.id.frag_youtube);
     }
 
     private void initViewPager() {
         mPageAdapter = new MoviePageAdapter(getSupportFragmentManager());
+
         MovieInfoFragment infoFragment = MovieInfoFragment.newInstance();
         infoFragment.setViewModel(mViewModel);
+        TrailerFragment trailerFragment = TrailerFragment.getInstance();
+        trailerFragment.setViewModel(mViewModel);
+        trailerFragment.setListener(this);
+
         mPageAdapter.addFragment(infoFragment);
+        mPageAdapter.addFragment(trailerFragment);
         mBinding.viewPager.setAdapter(mPageAdapter);
     }
 
     private void initViewModel() {
         mViewModel = new MovieDetailViewModel(MovieRepository.getInstance(MovieRemoteDataSource.getInstance(this),
-                MovieLocalDataSource.getInstance(this)));
+                MovieLocalDataSource.getInstance(this)), this);
         mViewModel.loadMovieDetail(mMovieId);
     }
 
     private void initActionBar() {
         setSupportActionBar(mBinding.toolbar);
-        mBinding.toolbar.setTitle(mMovieName);
+        getSupportActionBar().setTitle(mMovieName);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         mBinding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
@@ -93,5 +110,27 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onDestroy() {
         mViewModel.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreateTrailer(String mTrailerKey) {
+        mYoutubeFragment.setTrailerId(mTrailerKey);
+    }
+
+    @Override
+    public void onPlayTrailer(String mTrailerKey) {
+        mYoutubeFragment.setTrailerId(mTrailerKey);
+        mYoutubeFragment.playTrailer();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setTextStatusBarColor() {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mYoutubeFragment.setFullScreen(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 }

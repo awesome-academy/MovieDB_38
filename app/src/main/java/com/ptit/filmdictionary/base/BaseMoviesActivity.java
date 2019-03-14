@@ -18,6 +18,7 @@ import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.databinding.ActivityCategoryBinding;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
 import com.ptit.filmdictionary.ui.category.CategoryNavigator;
+import com.ptit.filmdictionary.ui.movie_detail.MovieDetailActivity;
 
 public abstract class BaseMoviesActivity<T, V extends RecyclerView.Adapter> extends AppCompatActivity
         implements CategoryNavigator, CategoryAdapter.ItemClickListener {
@@ -102,7 +103,7 @@ public abstract class BaseMoviesActivity<T, V extends RecyclerView.Adapter> exte
 
     @Override
     public void onItemMovieClick(Movie movie) {
-        //TODO : start activity MovieDetail
+        startActivity(MovieDetailActivity.getIntent(this, movie.getId(), movie.getTitle()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

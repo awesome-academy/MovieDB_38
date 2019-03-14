@@ -9,4 +9,5 @@
     <color name="color_light_gray">#D6D6D6</color>
     <color name="color_transparent_black">#3B000000</color>
     <color name="color_star">#FF9800</color>
+    <color name="color_bg_trailer_title">#80000000</color>
 </resources>
