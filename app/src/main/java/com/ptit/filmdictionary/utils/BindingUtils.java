@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.os.Build;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.MovieAdapter;
+import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
 
 public class BindingUtils {
     private static final int ROUNDING_RADIUS = 20;
@@ -26,6 +28,15 @@ public class BindingUtils {
                                   ObservableList<Movie> movies) {
         CategoryAdapter adapter = (CategoryAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.addMovies(movies);
+    }
+
+    @BindingAdapter("bindViewPager")
+    public static void bindViewPager(ViewPager viewPager,
+                                     ObservableList<Movie> movies) {
+        SlideAdapter slideAdapter = (SlideAdapter) viewPager.getAdapter();
+        if(slideAdapter != null){
+            slideAdapter.update(movies);
+        }
     }
 
     @BindingAdapter("bindImage")

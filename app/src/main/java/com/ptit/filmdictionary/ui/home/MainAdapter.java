@@ -4,13 +4,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class SlideAdapter extends FragmentPagerAdapter {
+public class MainAdapter extends FragmentPagerAdapter {
     private static final int SUM_FRAGMENT = 1;
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_FAVORITE = 1;
     private static final int FRAGMENT_SETTING = 2;
 
-    public SlideAdapter(FragmentManager fm) {
+    public MainAdapter(FragmentManager fm) {
         super(fm);
     }
 

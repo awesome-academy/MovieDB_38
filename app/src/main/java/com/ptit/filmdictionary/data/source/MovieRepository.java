@@ -57,6 +57,11 @@ public class MovieRepository extends BaseRepository implements MovieDataSource.L
     }
 
     @Override
+    public Observable<MovieResponse> getMoviesTrendingByDay() {
+        return mRemote.getMoviesTrendingByDay();
+    }
+
+    @Override
     public Observable<MovieResponse> getMoviesByCategory(String categoryType, int page) {
         return mRemote.getMoviesByCategory(categoryType, page);
     }

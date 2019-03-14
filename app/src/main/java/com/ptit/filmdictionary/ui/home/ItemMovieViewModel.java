@@ -22,6 +22,10 @@ public class ItemMovieViewModel extends BaseObservable {
         return mMovie.getBackdropPath();
     }
 
+    public String getReleaseDate(){
+        return mMovie.getReleaseDate();
+    }
+
     public double getVoteAverage(){
         return mMovie.getVoteAverage();
     }
