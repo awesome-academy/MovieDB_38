@@ -13,6 +13,7 @@ import com.ptit.filmdictionary.BR;
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.base.BaseFragment;
 import com.ptit.filmdictionary.data.model.CategoryKey;
+import com.ptit.filmdictionary.data.model.CategoryName;
 import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.MovieRepository;
@@ -26,7 +27,6 @@ import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.MovieDetailActivity;
 import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
 import com.ptit.filmdictionary.ui.search.SearchActivity;
-import com.ptit.filmdictionary.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -169,18 +169,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void onCategoryClick(String category) {
-        switch (category){
-            case Constants.TITLE_UP_COMING:
-                startCategoryActivity(CategoryKey.CATEGORY_UP_COMING, Constants.TITLE_UP_COMING);
+        switch (category) {
+            case CategoryName.TITLE_UP_COMING:
+                startCategoryActivity(CategoryKey.CATEGORY_UP_COMING, CategoryName.TITLE_UP_COMING);
                 break;
-            case Constants.TITLE_POPULAR:
-                startCategoryActivity(CategoryKey.CATEGORY_POPULAR, Constants.TITLE_POPULAR);
+            case CategoryName.TITLE_POPULAR:
+                startCategoryActivity(CategoryKey.CATEGORY_POPULAR, CategoryName.TITLE_POPULAR);
                 break;
-            case Constants.TITLE_TOP_RATE:
-                startCategoryActivity(CategoryKey.CATEGORY_TOP_RATE, Constants.TITLE_TOP_RATE);
+            case CategoryName.TITLE_TOP_RATE:
+                startCategoryActivity(CategoryKey.CATEGORY_TOP_RATE, CategoryName.TITLE_TOP_RATE);
                 break;
-            case Constants.TITLE_NOW_PLAYING:
-                startCategoryActivity(CategoryKey.CATEGORY_NOW_PLAYING, Constants.TITLE_NOW_PLAYING);
+            case CategoryName.TITLE_NOW_PLAYING:
+                startCategoryActivity(CategoryKey.CATEGORY_NOW_PLAYING, CategoryName.TITLE_NOW_PLAYING);
                 break;
             default:
                 break;
@@ -194,7 +194,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.text_genres:
                 break;
             default:

@@ -7,22 +7,15 @@ import android.databinding.ObservableList;
 import com.ptit.filmdictionary.base.BaseRepository;
 import com.ptit.filmdictionary.base.BaseViewModel;
 import com.ptit.filmdictionary.data.model.CategoryKey;
+import com.ptit.filmdictionary.data.model.CategoryName;
 import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.MovieRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.ptit.filmdictionary.utils.Constants.TITLE_POPULAR;
-import static com.ptit.filmdictionary.utils.Constants.TITLE_TOP_RATE;
-import static com.ptit.filmdictionary.utils.Constants.TITLE_UP_COMING;
-import static com.ptit.filmdictionary.utils.Constants.TITLE_NOW_PLAYING;
 
 public class HomeViewModel extends BaseViewModel<HomeNavigator> {
     private static final int FIRST_PAGE = 1;
@@ -120,7 +113,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .subscribe(movieResponse -> {
                     nowPlayingMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(nowPlayingMoviesObservable);
-                    categoryTitleObservable.add(TITLE_NOW_PLAYING);
+                    categoryTitleObservable.add(CategoryName.TITLE_NOW_PLAYING);
                     isNowPlayingLoadedObservable.set(true);
                     isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
@@ -134,7 +127,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .subscribe(movieResponse -> {
                     upComingMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(upComingMoviesObservable);
-                    categoryTitleObservable.add(TITLE_UP_COMING);
+                    categoryTitleObservable.add(CategoryName.TITLE_UP_COMING);
                     isUpComingLoadedObservable.set(true);
                     isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
@@ -148,7 +141,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .subscribe(movieResponse -> {
                     topRateMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(topRateMoviesObservable);
-                    categoryTitleObservable.add(TITLE_TOP_RATE);
+                    categoryTitleObservable.add(CategoryName.TITLE_TOP_RATE);
                     isTopRateLoadedObservable.set(true);
                     isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
@@ -162,7 +155,7 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .subscribe(movieResponse -> {
                     popularMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(popularMoviesObservable);
-                    categoryTitleObservable.add(TITLE_POPULAR);
+                    categoryTitleObservable.add(CategoryName.TITLE_POPULAR);
                     isPopularLoadedObservable.set(true);
                     isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
