@@ -17,7 +17,7 @@ public interface MovieDataSource {
 
         boolean deleteFavorite(Movie movie);
 
-        boolean isFavorite(Movie movie);
+        boolean isFavorite(int movieId);
     }
 
     interface Remote {
