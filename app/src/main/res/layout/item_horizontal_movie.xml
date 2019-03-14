@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ptit.filmdictionary.ui.search.HorizontalMovieViewModel"/>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_dark">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_poster"
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="@dimen/dp_160"
+            app:cardCornerRadius="@dimen/dp_10"
+            app:cardElevation="@dimen/dp_4"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_poster"
+                app:bindImage="@{viewModel.movieObservableField.get().getPosterPath()}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_dark_gray"
+                android:scaleType="centerCrop" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_150"
+            app:cardCornerRadius="@dimen/dp_10"
+            app:cardElevation="@dimen/dp_2"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp_4">
+
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{viewModel.movieObservableField.get().getTitle()}"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_vertical_two"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    style="?attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="10"
+                    android:progressBackgroundTint="@color/color_star"
+                    android:progressTint="@color/color_star"
+                    android:rating="@{(float)viewModel.movieObservableField.get().getVoteAverage()}"
+                    android:secondaryProgressTint="@color/color_star"
+                    app:layout_constraintStart_toEndOf="@id/guideline_vertical_two"
+                    app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+                <TextView
+                    android:id="@+id/text_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.movieObservableField.get().getReleaseDate()}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/guideline_vertical_two"
+                    app:layout_constraintTop_toBottomOf="@id/rating_bar" />
+
+                <TextView
+                    android:id="@+id/text_overview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@{viewModel.movieObservableField.get().getOverview()}"
+                    android:textColor="@color/color_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_vertical_two"
+                    app:layout_constraintTop_toBottomOf="@id/text_release_date" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_vertical_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/dp_110" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

@@ -11,6 +11,9 @@ import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.MovieRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -85,7 +88,6 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 isPopularLoadedObservable.get() &&
                 isNowPlayingLoadedObservable.get();
     }
-
     private void loadGenres() {
         Disposable disposable = mRepository.getGenres()
                 .subscribeOn(Schedulers.io())
@@ -167,27 +169,15 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
         mDisposable.add(disposable);
     }
 
-    public ObservableList<Movie> getNowPlayingMoviesObservable() {
-        return nowPlayingMoviesObservable;
-    }
-
-    public ObservableList<ObservableList<Movie>> getCategoryMoviesObservable() {
-        return categoryMoviesObservable;
-    }
-
-    public ObservableList<String> getCategoryTitleObservable() {
-        return categoryTitleObservable;
-    }
-
     private void handleError(String message) {
     }
 
     public void onGenreClick(Genre genre){
-        mNavigator.startGenreActivity(genre.getId(), genre.getName());
+        getNavigator().startGenreActivity(genre.getId(), genre.getName());
     }
 
     public void onSearchClick(){
-
+        getNavigator().startSearchActivity();
     }
 
     public void dispose() {

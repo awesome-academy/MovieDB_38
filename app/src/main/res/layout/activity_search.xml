@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ptit.filmdictionary.ui.search.SearchViewModel" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_search"
+            android:layout_width="0dp"
+            android:layout_height="?android:actionBarSize"
+            android:background="@color/color_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/text_search"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/color_white"
+                    android:hint="@string/text_search_movie"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/spinner_search"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spinner_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/progress_load_search_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:indeterminateTint="@color/color_black"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_search" />
+
+        <TextView
+            android:id="@+id/text_total_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/color_primary_dark"
+            android:gravity="left"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.isLoadedResults ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@id/recycler_search"
+            app:layout_constraintStart_toStartOf="@id/recycler_search"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_search"
+            app:totalResult="@{String.valueOf(viewModel.totalResultObservable)}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_search"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:orientation="vertical"
+            app:bindSearchMovies="@{viewModel.searchResultObservable}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/progress_load_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_total_result" />
+
+        <ProgressBar
+            android:id="@+id/progress_load_more"
+            style="?android:progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
