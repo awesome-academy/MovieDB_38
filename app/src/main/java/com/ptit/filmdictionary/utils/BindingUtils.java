@@ -6,18 +6,21 @@ import android.databinding.ObservableList;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ptit.filmdictionary.R;
+import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.MovieAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
+import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
+
+import java.util.List;
 
 public class BindingUtils {
     private static final int ROUNDING_RADIUS = 20;
@@ -34,7 +37,7 @@ public class BindingUtils {
     public static void bindViewPager(ViewPager viewPager,
                                      ObservableList<Movie> movies) {
         SlideAdapter slideAdapter = (SlideAdapter) viewPager.getAdapter();
-        if(slideAdapter != null){
+        if (slideAdapter != null) {
             slideAdapter.update(movies);
         }
     }
@@ -92,4 +95,10 @@ public class BindingUtils {
         }
     }
 
+
+    @BindingAdapter("bindGenres")
+    public static void bindGenres(RecyclerView recyclerView, List<Genre> genres) {
+        GenreRecylerAdapter adapter = (GenreRecylerAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setGenres(genres);
+    }
 }

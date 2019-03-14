@@ -17,4 +17,6 @@
     <string name="tab_trailer">Trailer</string>
     <string name="tab_actor">Actor</string>
     <string name="tab_producer">Producer</string>
+    <string name="label_minutes">minutes</string>
+    <string name="label_overview">Overview</string>
 </resources>
