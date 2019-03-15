@@ -16,9 +16,11 @@ public class MovieDetailViewModel {
     public final ObservableBoolean mShowProgress = new ObservableBoolean(true);
     private MovieRepository mRepository;
     private CompositeDisposable mCompositeDisposable;
+    private OnTrailerListener mListener;
 
-    public MovieDetailViewModel(MovieRepository repository) {
+    public MovieDetailViewModel(MovieRepository repository, OnTrailerListener listener) {
         mRepository = repository;
+        mListener = listener;
         mCompositeDisposable = new CompositeDisposable();
     }
 
@@ -29,6 +31,9 @@ public class MovieDetailViewModel {
                 .subscribe(movie -> {
                     mMovie.set(movie);
                     mShowProgress.set(false);
+                    if (!movie.getVideoResult().getVideos().isEmpty()) {
+                        mListener.onCreateTrailer(movie.getVideoResult().getVideos().get(0).getKey());
+                    }
                 });
         mCompositeDisposable.add(disposable);
     }

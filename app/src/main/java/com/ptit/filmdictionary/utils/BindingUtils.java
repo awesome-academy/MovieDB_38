@@ -14,11 +14,13 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
+import com.ptit.filmdictionary.data.model.Video;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.MovieAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
+import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerRecyclerAdapter;
 
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class BindingUtils {
         }
     }
 
-    @BindingAdapter("bindImage")
+    @BindingAdapter("bindSmallImage")
     public static void bindPoster(ImageView imageView, ObservableField<String> image_path) {
         GlideApp.with(imageView)
                 .load(StringUtils.getSmallImage(image_path.get()))
@@ -100,5 +102,21 @@ public class BindingUtils {
     public static void bindGenres(RecyclerView recyclerView, List<Genre> genres) {
         GenreRecylerAdapter adapter = (GenreRecylerAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.setGenres(genres);
+    }
+
+    @BindingAdapter("app:bindTrailers")
+    public static void bindTrailers(RecyclerView recyclerView, List<Video> videos) {
+        TrailerRecyclerAdapter adapter = (TrailerRecyclerAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setVideos(videos);
+    }
+
+    @BindingAdapter("app:youTubeThumbnailView")
+    public static void setYouTubeThumbnailViewForTrailer(ImageView thumbnailView,
+                                                         String trailerKey) {
+        GlideApp.with(thumbnailView)
+                .load(StringUtils.getThumbnail(trailerKey))
+                .thumbnail(GlideApp.with(thumbnailView).load(R.drawable.preloader))
+                .error(R.drawable.no_image)
+                .into(thumbnailView);
     }
 }

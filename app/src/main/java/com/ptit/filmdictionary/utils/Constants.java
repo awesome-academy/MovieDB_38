@@ -9,5 +9,5 @@ public class Constants {
     public static final String TITLE_UP_COMING = "Up Coming";
     public static final String TITLE_TOP_RATE = "Top Rate";
     public static final String TITLE_POPULAR = "Popular";
-
+    public static final String BASE_THUMBNAIL_PATH = "https://img.youtube.com/vi/%s/hqdefault.jpg";
 }

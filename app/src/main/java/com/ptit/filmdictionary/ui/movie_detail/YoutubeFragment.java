@@ -49,4 +49,8 @@ public class YoutubeFragment extends YouTubePlayerFragment
     public void playTrailer() {
         if (mYouTubePlayer != null) mYouTubePlayer.play();
     }
+
+    public void setFullScreen(boolean isFullScreen) {
+        mYouTubePlayer.setFullscreen(isFullScreen);
+    }
 }

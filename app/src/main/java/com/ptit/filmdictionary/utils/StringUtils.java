@@ -16,4 +16,8 @@ public class StringUtils {
                 .append(image_path);
         return builder.toString();
     }
+
+    public static String getThumbnail(String trailerKey) {
+        return String.format(Constants.BASE_THUMBNAIL_PATH, trailerKey);
+    }
 }
