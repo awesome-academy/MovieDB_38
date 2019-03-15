@@ -18,6 +18,7 @@ import com.ptit.filmdictionary.data.source.remote.MovieRemoteDataSource;
 import com.ptit.filmdictionary.databinding.FragmentActorMoviesBinding;
 import com.ptit.filmdictionary.ui.actor.ActorActivity;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
+import com.ptit.filmdictionary.ui.movie_detail.MovieDetailActivity;
 
 import java.util.ArrayList;
 
@@ -91,7 +92,7 @@ public class MoviesFragment extends Fragment implements MoviesNavigator,
 
     @Override
     public void onItemMovieClick(Movie movie) {
-        //TODO : start activity MovieDetail
+        startActivity(MovieDetailActivity.getIntent(getContext(), movie.getId(), movie.getTitle()));
     }
 
     @Override

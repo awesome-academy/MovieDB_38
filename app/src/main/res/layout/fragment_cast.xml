@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ptit.filmdictionary.ui.movie_detail.MovieDetailViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_primary_dark"
+        android:orientation="vertical"
+        tools:context=".ui.movie_detail.casts.CastFragment">
+
+        <ProgressBar
+            android:id="@+id/progress_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/color_black"
+            android:visibility="@{viewModel.mShowProgress ? View.VISIBLE : View.GONE}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_casts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_primary_dark"
+            app:bindCasts="@{viewModel.mMovie.castResult.actors}"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:spanCount="2" />
+    </LinearLayout>
+</layout>

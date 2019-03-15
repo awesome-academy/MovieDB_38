@@ -17,6 +17,7 @@ import com.ptit.filmdictionary.data.source.MovieRepository;
 import com.ptit.filmdictionary.data.source.local.MovieLocalDataSource;
 import com.ptit.filmdictionary.data.source.remote.MovieRemoteDataSource;
 import com.ptit.filmdictionary.databinding.ActivityMovieDetailBinding;
+import com.ptit.filmdictionary.ui.movie_detail.casts.CastFragment;
 import com.ptit.filmdictionary.ui.movie_detail.info.MovieInfoFragment;
 import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerFragment;
 
@@ -55,10 +56,14 @@ public class MovieDetailActivity extends AppCompatActivity
         TrailerFragment trailerFragment = TrailerFragment.getInstance();
         trailerFragment.setViewModel(mViewModel);
         trailerFragment.setListener(this);
+        CastFragment castFragment = CastFragment.getInstance();
+        castFragment.setViewModel(mViewModel);
 
         mPageAdapter.addFragment(infoFragment);
         mPageAdapter.addFragment(trailerFragment);
+        mPageAdapter.addFragment(castFragment);
         mBinding.viewPager.setAdapter(mPageAdapter);
+        mBinding.tabsMovieDetail.setupWithViewPager(mBinding.viewPager);
     }
 
     private void initViewModel() {

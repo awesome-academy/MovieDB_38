@@ -21,7 +21,7 @@ public class Actor implements Parcelable {
 
     @SerializedName("character")
     @Expose
-    private String mCharater;
+    private String mCharacter;
 
     @SerializedName("birthday")
     @Expose
@@ -80,12 +80,12 @@ public class Actor implements Parcelable {
         mProfilePath = profilePath;
     }
 
-    public String getCharater() {
-        return mCharater;
+    public String getCharacter() {
+        return mCharacter;
     }
 
-    public void setCharater(String charater) {
-        mCharater = charater;
+    public void setCharacter(String character) {
+        mCharacter = character;
     }
 
     public String getBirthday() {
