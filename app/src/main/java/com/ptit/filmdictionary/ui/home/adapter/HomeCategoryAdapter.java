@@ -52,7 +52,8 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            MovieAdapter.MovieListener {
         private ItemCategoryBinding mItemCategoryBinding;
         private CategoryListener mListener;
 
@@ -60,7 +61,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
             super(binding.getRoot());
             mItemCategoryBinding = binding;
             mListener = listener;
-            mItemCategoryBinding.recyclerMovie.setAdapter(new MovieAdapter(null));
+            mItemCategoryBinding.recyclerMovie.setAdapter(new MovieAdapter(this));
             mItemCategoryBinding.textCategory.setOnClickListener(this);
         }
 
@@ -75,9 +76,16 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
                 mListener.onCategoryClick(mItemCategoryBinding.textCategory.getText().toString());
             }
         }
+
+        @Override
+        public void onMovieClickListener(Movie movie) {
+            mListener.onMovieClick(movie);
+        }
     }
 
     public interface CategoryListener {
         void onCategoryClick(String category);
+
+        void onMovieClick(Movie movie);
     }
 }

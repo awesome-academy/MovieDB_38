@@ -1,9 +1,8 @@
 package com.ptit.filmdictionary.ui.home;
 
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.ptit.filmdictionary.base.BaseRepository;
 import com.ptit.filmdictionary.base.BaseViewModel;
@@ -11,12 +10,10 @@ import com.ptit.filmdictionary.data.model.CategoryKey;
 import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.MovieRepository;
-import com.ptit.filmdictionary.data.source.remote.response.MovieResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.ptit.filmdictionary.utils.Constants.TITLE_POPULAR;
@@ -37,8 +34,17 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
     public final ObservableList<Movie> popularMoviesObservable;
     public final ObservableList<Movie> topRateMoviesObservable;
     public final ObservableList<Movie> topTrendingMoviesObservable;
+    public final ObservableList<Genre> genresObservable;
     public final ObservableList<ObservableList<Movie>> categoryMoviesObservable;
     public final ObservableList<String> categoryTitleObservable;
+    
+    public final ObservableBoolean isUpComingLoadedObservable;
+    public final ObservableBoolean isNowPlayingLoadedObservable;
+    public final ObservableBoolean isTopRateLoadedObservable;
+    public final ObservableBoolean isPopularLoadedObservable;
+    public final ObservableBoolean isGenresLoadedObservable;
+    public final ObservableBoolean isTrendingLoadedObservable;
+    public final ObservableBoolean isAllLoadedObservable;
 
     public HomeViewModel(BaseRepository repository) {
         super(repository);
@@ -48,9 +54,17 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
         popularMoviesObservable = new ObservableArrayList<>();
         topRateMoviesObservable = new ObservableArrayList<>();
         topTrendingMoviesObservable = new ObservableArrayList<>();
+        genresObservable = new ObservableArrayList<>();
         categoryMoviesObservable = new ObservableArrayList<>();
         categoryTitleObservable = new ObservableArrayList<>();
         mDisposable = new CompositeDisposable();
+        isUpComingLoadedObservable = new ObservableBoolean(false);
+        isNowPlayingLoadedObservable = new ObservableBoolean(false);
+        isTopRateLoadedObservable = new ObservableBoolean(false);
+        isPopularLoadedObservable = new ObservableBoolean(false);
+        isGenresLoadedObservable = new ObservableBoolean(false);
+        isTrendingLoadedObservable = new ObservableBoolean(false);
+        isAllLoadedObservable = new ObservableBoolean(false);
         loadData();
     }
 
@@ -60,6 +74,29 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
         loadPopularMovies();
         loadUpComingMovies();
         loadTopTrendingMovies();
+        loadGenres();
+    }
+
+    private boolean isAllLoaded(){
+        return isGenresLoadedObservable.get() &&
+                isUpComingLoadedObservable.get() &&
+                isTopRateLoadedObservable.get() &&
+                isTrendingLoadedObservable.get() &&
+                isPopularLoadedObservable.get() &&
+                isNowPlayingLoadedObservable.get();
+    }
+
+    private void loadGenres() {
+        Disposable disposable = mRepository.getGenres()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(genreResponse -> {
+                    genresObservable.addAll(genreResponse.getGenres());
+                    isGenresLoadedObservable.set(true);
+                    isAllLoadedObservable.set(isAllLoaded());
+                },
+                        throwable -> handleError(throwable.getMessage()));
+        mDisposable.add(disposable);
     }
 
     private void loadTopTrendingMovies() {
@@ -68,6 +105,8 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieResponse -> {
                     topTrendingMoviesObservable.addAll(movieResponse.getResults().subList(FROM_INDEX, TO_INDEX));
+                    isTrendingLoadedObservable.set(true);
+                    isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
         mDisposable.add(disposable);
     }
@@ -80,6 +119,8 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                     nowPlayingMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(nowPlayingMoviesObservable);
                     categoryTitleObservable.add(TITLE_NOW_PLAYING);
+                    isNowPlayingLoadedObservable.set(true);
+                    isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
         mDisposable.add(disposable);
     }
@@ -92,6 +133,8 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                     upComingMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(upComingMoviesObservable);
                     categoryTitleObservable.add(TITLE_UP_COMING);
+                    isUpComingLoadedObservable.set(true);
+                    isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
         mDisposable.add(disposable);
     }
@@ -104,6 +147,8 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                     topRateMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(topRateMoviesObservable);
                     categoryTitleObservable.add(TITLE_TOP_RATE);
+                    isTopRateLoadedObservable.set(true);
+                    isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
         mDisposable.add(disposable);
     }
@@ -116,6 +161,8 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
                     popularMoviesObservable.addAll(movieResponse.getResults());
                     categoryMoviesObservable.add(popularMoviesObservable);
                     categoryTitleObservable.add(TITLE_POPULAR);
+                    isPopularLoadedObservable.set(true);
+                    isAllLoadedObservable.set(isAllLoaded());
                 }, throwable -> handleError(throwable.getMessage()));
         mDisposable.add(disposable);
     }
