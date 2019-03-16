@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -21,6 +22,7 @@ import com.ptit.filmdictionary.ui.home.adapter.MovieAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.casts.CastsRecyclerAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
+import com.ptit.filmdictionary.ui.search.adapter.SearchAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerRecyclerAdapter;
 
 import java.util.List;
@@ -28,12 +30,28 @@ import java.util.List;
 public class BindingUtils {
     private static final int ROUNDING_RADIUS = 20;
     private static final float PROGRESS_UNIT = 10;
+    private static final String SUFFIX_RESULTS = " results";
+    private static final String PREFIX_FOUND = "Found ";
+
+    @BindingAdapter("totalResult")
+    public static void totalResult(TextView textView, String totalResult) {
+        textView.setText(StringUtils.concateString(PREFIX_FOUND, totalResult, SUFFIX_RESULTS));
+    }
 
     @BindingAdapter("bindMovies")
     public static void bindMovies(RecyclerView recyclerView,
                                   ObservableList<Movie> movies) {
         CategoryAdapter adapter = (CategoryAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.addMovies(movies);
+    }
+
+    @BindingAdapter("bindSearchMovies")
+    public static void bindSearchMovies(RecyclerView recyclerView,
+                                        List<Movie> movies) {
+        SearchAdapter adapter = (SearchAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.setData(movies);
+        }
     }
 
     @BindingAdapter("bindViewPager")

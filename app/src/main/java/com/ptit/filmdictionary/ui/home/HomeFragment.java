@@ -25,6 +25,7 @@ import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.MovieDetailActivity;
 import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
+import com.ptit.filmdictionary.ui.search.SearchActivity;
 import com.ptit.filmdictionary.utils.Constants;
 
 import java.util.ArrayList;
@@ -163,7 +164,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     public void startSearchActivity() {
-
+        startActivity(SearchActivity.getIntent(getActivity()));
     }
 
     @Override

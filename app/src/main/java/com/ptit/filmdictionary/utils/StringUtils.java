@@ -17,6 +17,14 @@ public class StringUtils {
         return builder.toString();
     }
 
+    public static String concateString(String... strings) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : strings) {
+            stringBuilder.append(s);
+        }
+        return stringBuilder.toString();
+    }
+
     public static String getThumbnail(String trailerKey) {
         return String.format(Constants.BASE_THUMBNAIL_PATH, trailerKey);
     }
