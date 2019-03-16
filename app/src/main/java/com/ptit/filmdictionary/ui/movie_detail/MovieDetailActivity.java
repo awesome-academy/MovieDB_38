@@ -23,6 +23,7 @@ import com.ptit.filmdictionary.ui.movie_detail.casts.CastFragment;
 import com.ptit.filmdictionary.ui.movie_detail.info.MovieInfoFragment;
 import com.ptit.filmdictionary.ui.movie_detail.producer.ProducerFragment;
 import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerFragment;
+import com.ptit.filmdictionary.ui.search.SearchActivity;
 import com.ptit.filmdictionary.utils.Constants;
 
 public class MovieDetailActivity extends AppCompatActivity
@@ -97,7 +98,7 @@ public class MovieDetailActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                //todo: start searchactivity
+                startActivity(SearchActivity.getIntent(this));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

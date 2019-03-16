@@ -22,6 +22,7 @@ import com.ptit.filmdictionary.ui.category.CategoryNavigator;
 import com.ptit.filmdictionary.ui.category.CategoryViewModel;
 import com.ptit.filmdictionary.ui.main.OnInternetListener;
 import com.ptit.filmdictionary.ui.movie_detail.MovieDetailActivity;
+import com.ptit.filmdictionary.ui.search.SearchActivity;
 import com.ptit.filmdictionary.utils.Constants;
 
 public abstract class BaseMoviesActivity<T, V extends RecyclerView.Adapter> extends AppCompatActivity
@@ -88,7 +89,7 @@ public abstract class BaseMoviesActivity<T, V extends RecyclerView.Adapter> exte
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_search:
-                //Todo: start activity Search
+                startActivity(SearchActivity.getIntent(this));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

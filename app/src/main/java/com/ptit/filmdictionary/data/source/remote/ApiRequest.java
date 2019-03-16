@@ -1,7 +1,5 @@
 package com.ptit.filmdictionary.data.source.remote;
 
-import android.databinding.ObservableList;
-
 import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.remote.response.GenreResponse;

@@ -5,19 +5,24 @@ import android.databinding.ObservableList;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Actor;
+import com.ptit.filmdictionary.data.model.CategoryName;
 import com.ptit.filmdictionary.data.model.Company;
 import com.ptit.filmdictionary.data.model.Genre;
+import com.ptit.filmdictionary.data.model.History;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.model.Video;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
+import com.ptit.filmdictionary.ui.history.adapter.HistoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.MovieAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
@@ -26,7 +31,9 @@ import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
 import com.ptit.filmdictionary.ui.search.adapter.SearchAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.producer.ProducerRecyclerAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerRecyclerAdapter;
+import com.ptit.filmdictionary.ui.search.adapter.SearchAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BindingUtils {
@@ -34,6 +41,31 @@ public class BindingUtils {
     private static final float PROGRESS_UNIT = 10;
     private static final String SUFFIX_RESULTS = " results";
     private static final String PREFIX_FOUND = "Found ";
+    private static final String DEFAULT_SPINNER = "All";
+
+    @BindingAdapter("bindHistory")
+    public static void bindHistory(RecyclerView recyclerView, List<History> histories) {
+        HistoryAdapter adapter = (HistoryAdapter) recyclerView.getAdapter();
+        if (adapter == null) return;
+        adapter.setData(histories);
+    }
+
+    @BindingAdapter("spinnerAdapter")
+    public static void bindSpinner(Spinner spinner, List<Genre> genres) {
+        List<String> strings = new ArrayList<>();
+        strings.add(DEFAULT_SPINNER);
+        strings.add(CategoryName.TITLE_TOP_RATE);
+        strings.add(CategoryName.TITLE_NOW_PLAYING);
+        strings.add(CategoryName.TITLE_POPULAR);
+        strings.add(CategoryName.TITLE_UP_COMING);
+        for (Genre genre : genres) {
+            strings.add(genre.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(spinner.getContext(),
+                android.R.layout.simple_spinner_item, strings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
 
     @BindingAdapter("totalResult")
     public static void totalResult(TextView textView, String totalResult) {
@@ -47,11 +79,14 @@ public class BindingUtils {
         if (adapter != null) adapter.addMovies(movies);
     }
 
-    @BindingAdapter("bindSearchMovies")
+    @BindingAdapter(value = {"bindSearchMovies", "isLoadMore"})
     public static void bindSearchMovies(RecyclerView recyclerView,
-                                        List<Movie> movies) {
+                                        List<Movie> movies, boolean isLoadMore) {
         SearchAdapter adapter = (SearchAdapter) recyclerView.getAdapter();
-        if (adapter != null) {
+        if (adapter == null) return;
+        if (isLoadMore) {
+            adapter.addData(movies);
+        } else {
             adapter.setData(movies);
         }
     }

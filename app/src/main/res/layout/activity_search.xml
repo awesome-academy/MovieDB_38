@@ -48,23 +48,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/image_history"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:spinnerAdapter="@{viewModel.genresObservable}" />
+
+                <ImageView
+                    android:id="@+id/image_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:src="@drawable/ic_history_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.Toolbar>
-
-        <ProgressBar
-            android:id="@+id/progress_load_search_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:indeterminateTint="@color/color_black"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_search" />
 
         <TextView
             android:id="@+id/text_total_result"
@@ -93,6 +92,7 @@
             android:layout_marginEnd="@dimen/dp_10"
             android:orientation="vertical"
             app:bindSearchMovies="@{viewModel.searchResultObservable}"
+            app:isLoadMore="@{viewModel.isLoadMore}"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/progress_load_more"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,10 +100,24 @@
             app:layout_constraintTop_toBottomOf="@id/text_total_result" />
 
         <ProgressBar
+            android:id="@+id/progress_load_search_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:indeterminateTint="@color/color_black"
+            android:visibility="@{viewModel.isLoadingResults ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_search" />
+
+        <ProgressBar
             android:id="@+id/progress_load_more"
-            style="?android:progressBarStyleHorizontal"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_10"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/color_black"
+            android:visibility="@{viewModel.isLoadingMoreResults ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
