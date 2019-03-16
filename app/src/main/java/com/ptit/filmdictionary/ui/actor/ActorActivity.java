@@ -13,6 +13,7 @@ import android.view.View;
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Actor;
 import com.ptit.filmdictionary.databinding.ActivityActorBinding;
+import com.ptit.filmdictionary.ui.search.SearchActivity;
 
 public class ActorActivity extends AppCompatActivity {
     public static final String BUNDLE_ACTOR_KEY = "BUNDLE_ACTOR_KEY";
@@ -90,7 +91,7 @@ public class ActorActivity extends AppCompatActivity {
     }
 
     public void onSearchClick(View view) {
-        //Todo : start search activity
+        startActivity(SearchActivity.getIntent(this));
     }
 
     public String getActorId() {
