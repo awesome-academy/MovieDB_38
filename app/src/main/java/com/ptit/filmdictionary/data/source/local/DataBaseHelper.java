@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.databinding.ObservableArrayList;
 
+import com.ptit.filmdictionary.data.model.History;
+import com.ptit.filmdictionary.data.model.HistoryEntity;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.local.contract.FavoriteContract.FavoriteEntry;
 
@@ -27,8 +29,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     FavoriteEntry.COLUMN_NAME_MOVIE,
                     FavoriteEntry.COLUMN_NAME_VOTE,
                     FavoriteEntry.COLUMN_NAME_POSTER);
+    private static final String SQL_CREATE_HISTORY =
+            String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT)",
+                    HistoryEntity.TABLE_HISTORY,
+                    HistoryEntity.ID,
+                    HistoryEntity.TITLE);
     private static final String SQL_DELETE_FAVORITE =
             TABLE_DROP + FavoriteEntry.TABLE_FAVORITE;
+    private static final String SQL_DELETE_HISTORY =
+            TABLE_DROP + HistoryEntity.TABLE_HISTORY;
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,11 +46,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_FAVORITE);
+        db.execSQL(SQL_CREATE_HISTORY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_FAVORITE);
+        db.execSQL(SQL_DELETE_HISTORY);
         onCreate(db);
     }
 
@@ -118,4 +129,50 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 null);
         return (cursor != null && !cursor.isAfterLast());
     }
+    
+    public ObservableArrayList<History> getAllHistory() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<History> histories = new ArrayList<>();
+        ObservableArrayList<History> historiesObservable = new ObservableArrayList<>();
+        String[] projection = {
+                HistoryEntity.ID,
+                HistoryEntity.TITLE
+        };
+        Cursor cursor = db.query(HistoryEntity.TABLE_HISTORY,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null);
+        if (cursor != null) cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int id = cursor.getInt(cursor
+                    .getColumnIndexOrThrow(HistoryEntity.ID));
+            String title = cursor.getString(cursor
+                    .getColumnIndexOrThrow(HistoryEntity.TITLE));
+            History history = new History(id, title);
+            histories.add(history);
+            cursor.moveToNext();
+        }
+        historiesObservable.addAll(histories);
+        return historiesObservable;
+    }
+
+    public boolean addedHistory(History history) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(HistoryEntity.TITLE, history.getTitle());
+        long result = db.insert(HistoryEntity.TABLE_HISTORY, null, values);
+        return (result > 0);
+    }
+
+    public boolean deletedHistory(History history) {
+        SQLiteDatabase db = getWritableDatabase();
+        String selection = HistoryEntity.ID + SELECTION_SUFFIX;
+        String[] selectionArgs = {String.valueOf(history.getId())};
+        int result = db.delete(HistoryEntity.TABLE_HISTORY, selection, selectionArgs);
+        return (result > 0);
+    }
+
 }

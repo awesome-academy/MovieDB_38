@@ -22,4 +22,5 @@
     <string name="label_overview">Overview</string>
     <string name="label_empty">EMPTY</string>
     <string name="label_charater">as</string>
+    <string name="text_capital_history">HISTORY</string>
 </resources>

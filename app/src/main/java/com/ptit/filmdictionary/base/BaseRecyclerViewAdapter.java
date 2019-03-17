@@ -60,6 +60,7 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends RecyclerView.ViewHol
 
     public interface ItemListener<T> {
         void onItemClicked(T t, int position);
+        void onElementClicked(T t, int position);
     }
 
 }
