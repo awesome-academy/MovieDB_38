@@ -5,6 +5,7 @@ import android.databinding.ObservableList;
 
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.source.MovieRepository;
+import com.ptit.filmdictionary.ui.main.OnInternetListener;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -21,12 +22,17 @@ public class CategoryViewModel {
     private MovieRepository mMovieRepository;
     private CompositeDisposable mCompositeDisposable;
     private CategoryNavigator mNavigator;
+    private OnInternetListener mOnInternetListener;
 
     public CategoryViewModel(MovieRepository movieRepository, CategoryNavigator navigator) {
         mMovieRepository = movieRepository;
         mNavigator = navigator;
         mPage = DEFAULT_PAGE;
         mCompositeDisposable = new CompositeDisposable();
+    }
+
+    public void setOnInternetListener(OnInternetListener onInternetListener) {
+        mOnInternetListener = onInternetListener;
     }
 
     public String getCategoryKey() {
@@ -63,6 +69,8 @@ public class CategoryViewModel {
                     mMovies.addAll(movieResponse.getResults());
                     mNavigator.hideLoadData(true);
                     mNavigator.hideLoadMore(true);
+                }, throwable -> {
+                    mOnInternetListener.onNoInternet();
                 });
         mCompositeDisposable.add(disposable);
     }
@@ -85,6 +93,8 @@ public class CategoryViewModel {
                     mMovies.addAll(movieResponse.getResults());
                     mNavigator.hideLoadData(true);
                     mNavigator.hideLoadMore(true);
+                }, throwable -> {
+                    mOnInternetListener.onNoInternet();
                 });
         mCompositeDisposable.add(disposable);
     }
@@ -99,8 +109,9 @@ public class CategoryViewModel {
                     mMovies.addAll(movieResponse.getResults());
                     mNavigator.hideLoadData(true);
                     mNavigator.hideLoadMore(true);
+                }, throwable -> {
+                    mOnInternetListener.onNoInternet();
                 });
         mCompositeDisposable.add(disposable);
     }
-
 }

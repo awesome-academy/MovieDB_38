@@ -11,18 +11,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.source.MovieRepository;
 import com.ptit.filmdictionary.data.source.local.MovieLocalDataSource;
 import com.ptit.filmdictionary.data.source.remote.MovieRemoteDataSource;
 import com.ptit.filmdictionary.databinding.ActivityMovieDetailBinding;
+import com.ptit.filmdictionary.ui.main.OnInternetListener;
 import com.ptit.filmdictionary.ui.movie_detail.casts.CastFragment;
 import com.ptit.filmdictionary.ui.movie_detail.info.MovieInfoFragment;
+import com.ptit.filmdictionary.ui.movie_detail.producer.ProducerFragment;
 import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerFragment;
+import com.ptit.filmdictionary.utils.Constants;
 
 public class MovieDetailActivity extends AppCompatActivity
-        implements OnTrailerListener {
+        implements OnTrailerListener, OnInternetListener {
 
     private static final String BUNDLE_MOVIE_ID = "BUNDLE_MOVIE_ID";
     private static final String EXTRA_MOVIE_DETAIL = "com.ptit.filmdictionary.extras.EXTRA_MOVIE_DETAIL";
@@ -58,10 +62,13 @@ public class MovieDetailActivity extends AppCompatActivity
         trailerFragment.setListener(this);
         CastFragment castFragment = CastFragment.getInstance();
         castFragment.setViewModel(mViewModel);
+        ProducerFragment producerFragment = ProducerFragment.getInstance();
+        producerFragment.setViewModel(mViewModel);
 
         mPageAdapter.addFragment(infoFragment);
         mPageAdapter.addFragment(trailerFragment);
         mPageAdapter.addFragment(castFragment);
+        mPageAdapter.addFragment(producerFragment);
         mBinding.viewPager.setAdapter(mPageAdapter);
         mBinding.tabsMovieDetail.setupWithViewPager(mBinding.viewPager);
     }
@@ -69,6 +76,7 @@ public class MovieDetailActivity extends AppCompatActivity
     private void initViewModel() {
         mViewModel = new MovieDetailViewModel(MovieRepository.getInstance(MovieRemoteDataSource.getInstance(this),
                 MovieLocalDataSource.getInstance(this)), this);
+        mViewModel.setInternetListener(this);
         mViewModel.loadMovieDetail(mMovieId);
     }
 
@@ -137,5 +145,10 @@ public class MovieDetailActivity extends AppCompatActivity
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mYoutubeFragment.setFullScreen(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE);
+    }
+
+    @Override
+    public void onNoInternet() {
+        Toast.makeText(this, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
     }
 }

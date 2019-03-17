@@ -12,16 +12,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.databinding.ActivityCategoryBinding;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
 import com.ptit.filmdictionary.ui.category.CategoryNavigator;
+import com.ptit.filmdictionary.ui.category.CategoryViewModel;
+import com.ptit.filmdictionary.ui.main.OnInternetListener;
 import com.ptit.filmdictionary.ui.movie_detail.MovieDetailActivity;
+import com.ptit.filmdictionary.utils.Constants;
 
 public abstract class BaseMoviesActivity<T, V extends RecyclerView.Adapter> extends AppCompatActivity
-        implements CategoryNavigator, CategoryAdapter.ItemClickListener {
+        implements CategoryNavigator, CategoryAdapter.ItemClickListener, OnInternetListener {
     public static final String EXTRA_AGRS = "com.ptit.filmdictionary.extras.EXTRA_ARGS";
     public static final String BUNDLE_ACTION_BAR_TITLE = "BUNDLE_ACTION_BAR_TITLE";
     protected String mActionBarTitle;
@@ -37,6 +41,9 @@ public abstract class BaseMoviesActivity<T, V extends RecyclerView.Adapter> exte
             setTextStatusBarColor();
         }
         initViewModel();
+        if (mViewModel instanceof CategoryViewModel) {
+            ((CategoryViewModel) mViewModel).setOnInternetListener(this);
+        }
         initActionBar();
         setUpRecycler();
     }
@@ -109,5 +116,10 @@ public abstract class BaseMoviesActivity<T, V extends RecyclerView.Adapter> exte
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void setTextStatusBarColor() {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    @Override
+    public void onNoInternet() {
+        Toast.makeText(this, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
     }
 }

@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Actor;
+import com.ptit.filmdictionary.data.model.Company;
 import com.ptit.filmdictionary.data.model.Genre;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.model.Video;
@@ -23,6 +24,7 @@ import com.ptit.filmdictionary.ui.home.adapter.SlideAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.casts.CastsRecyclerAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.info.GenreRecylerAdapter;
 import com.ptit.filmdictionary.ui.search.adapter.SearchAdapter;
+import com.ptit.filmdictionary.ui.movie_detail.producer.ProducerRecyclerAdapter;
 import com.ptit.filmdictionary.ui.movie_detail.trailer.TrailerRecyclerAdapter;
 
 import java.util.List;
@@ -115,7 +117,6 @@ public class BindingUtils {
         }
     }
 
-
     @BindingAdapter("bindGenres")
     public static void bindGenres(RecyclerView recyclerView, List<Genre> genres) {
         GenreRecylerAdapter adapter = (GenreRecylerAdapter) recyclerView.getAdapter();
@@ -142,5 +143,11 @@ public class BindingUtils {
     public static void setAdapterRecyclerCasts(RecyclerView recyclerView, List<Actor> actors) {
         CastsRecyclerAdapter adapter = (CastsRecyclerAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.setActors(actors);
+    }
+
+    @BindingAdapter("app:bindProducer")
+    public static void setAdapterRecyclerProducer(RecyclerView recyclerView, List<Company> companies) {
+        ProducerRecyclerAdapter adapter = (ProducerRecyclerAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setCompanies(companies);
     }
 }
