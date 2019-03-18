@@ -62,6 +62,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
             mItemCategoryBinding = binding;
             mListener = listener;
             mItemCategoryBinding.recyclerMovie.setAdapter(new MovieAdapter(this));
+            mItemCategoryBinding.recyclerMovie.setNestedScrollingEnabled(false);
             mItemCategoryBinding.textCategory.setOnClickListener(this);
         }
 

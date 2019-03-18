@@ -117,7 +117,7 @@ public class SearchActivity extends BaseActivity<ActivitySearchBinding, SearchVi
             mSearchViewModel = new SearchViewModel(MovieRepository.getInstance(
                     MovieRemoteDataSource.getInstance(this),
                     MovieLocalDataSource.getInstance(this)),
-                    HistoryRepository.getInstance(this)
+                    HistoryRepository.getInstance()
             );
         }
         return mSearchViewModel;

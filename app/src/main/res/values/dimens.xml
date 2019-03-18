@@ -29,4 +29,5 @@
     <dimen name="sp_14">14sp</dimen>
     <dimen name="dp_min">0.5dp</dimen>
     <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
 </resources>

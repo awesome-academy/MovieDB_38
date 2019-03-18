@@ -109,6 +109,6 @@ public class SearchViewModel extends BaseViewModel<SearchNavigator> {
     }
 
     public void saveHistory(String query) {
-        mHistoryRepository.addHistory(new History(query));
+        mHistoryRepository.addedHistory(new History(query));
     }
 }

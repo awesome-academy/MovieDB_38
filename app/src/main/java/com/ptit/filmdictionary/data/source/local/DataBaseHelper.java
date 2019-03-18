@@ -130,7 +130,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return (cursor != null && !cursor.isAfterLast());
     }
     
-    public ObservableArrayList<History> getAllHistory() {
+    public ObservableArrayList<History> getAllHistories() {
         SQLiteDatabase db = getReadableDatabase();
         List<History> histories = new ArrayList<>();
         ObservableArrayList<History> historiesObservable = new ObservableArrayList<>();

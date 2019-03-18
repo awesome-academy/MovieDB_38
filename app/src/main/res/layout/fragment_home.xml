@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
+            android:fitsSystemWindows="true"
             android:visibility="@{viewModel.isAllLoadedObservable ? View.INVISIBLE : View.VISIBLE }" />
 
         <ProgressBar
@@ -67,6 +68,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?android:actionBarSize"
+                    android:layout_marginTop="@dimen/dp_25"
                     app:layout_collapseMode="pin"
                     app:title="@string/app_name"
                     app:titleTextColor="@android:color/black">

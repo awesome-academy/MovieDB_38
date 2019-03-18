@@ -85,6 +85,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         mFragmentHomeBinding.recyclerCategory.setAdapter(new HomeCategoryAdapter(this));
         mFragmentHomeBinding.recyclerCategory.setNestedScrollingEnabled(false);
         mFragmentHomeBinding.recyclerGenre.setAdapter(new GenreRecylerAdapter(new ArrayList<>(), this));
+        mFragmentHomeBinding.recyclerGenre.setNestedScrollingEnabled(false);
     }
 
     private void initTimerChangeSlide() {
@@ -115,29 +116,38 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     private void hideExpandedTittle() {
-        mFragmentHomeBinding.appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = true;
-            int scrollRange = DEFAULT_SCROLL_RANGE;
+        mFragmentHomeBinding.appBar.addOnOffsetChangedListener(getAppBarListener());
+    }
 
+    private AppBarLayout.OnOffsetChangedListener getAppBarListener() {
+        return new AppBarLayout.OnOffsetChangedListener() {
+            int scrollRange = DEFAULT_SCROLL_RANGE;
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (scrollRange == DEFAULT_SCROLL_RANGE) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    mFragmentHomeBinding.collapsingToolbar.setTitle(getString(R.string.app_name));
-                    mFragmentHomeBinding.imageSearch.setVisibility(View.VISIBLE);
-                    mFragmentHomeBinding.imageSearch.setColorFilter(ContextCompat.getColor(getActivity(),
-                            R.color.color_black),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                    isShow = true;
-                } else if (isShow) {
-                    mFragmentHomeBinding.collapsingToolbar.setTitle(TITTLE_SPACE);
-                    mFragmentHomeBinding.imageSearch.setVisibility(View.GONE);
-                    isShow = false;
+                    handleCollapsedToolbar();
+                } else {
+                    handleExpandedToolbar();
                 }
             }
-        });
+        };
+    }
+
+    private void handleExpandedToolbar() {
+        mFragmentHomeBinding.collapsingToolbar.setTitle(TITTLE_SPACE);
+        mFragmentHomeBinding.imageSearch.setColorFilter(ContextCompat.getColor(getActivity(),
+                R.color.color_white),
+                android.graphics.PorterDuff.Mode.SRC_IN);
+    }
+
+    private void handleCollapsedToolbar() {
+        mFragmentHomeBinding.collapsingToolbar.setTitle(getString(R.string.app_name));
+        mFragmentHomeBinding.imageSearch.setColorFilter(ContextCompat.getColor(getActivity(),
+                R.color.color_black),
+                android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
     public static HomeFragment getInstance() {

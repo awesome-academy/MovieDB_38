@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ptit.filmdictionary.R;
+import com.ptit.filmdictionary.ui.home.HomeFragment;
 import com.ptit.filmdictionary.ui.home.MainAdapter;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.
+        OnNavigationItemSelectedListener {
     private static final int FRAGMENT_HOME = 1;
     private static final int FRAGMENT_FAVORITE = 2;
     private static final int FRAGMENT_SETTING = 3;
@@ -22,12 +24,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+        setTheme(R.style.TransparentStatusTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            setTextStatusBarColor();
-        }
         initViews();
         initViewPager();
         registerEvents();
@@ -45,11 +44,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private void initViews() {
         mViewPager = findViewById(R.id.view_pager);
         mNavigationView = findViewById(R.id.bottom_navigation);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setTextStatusBarColor() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     @Override
