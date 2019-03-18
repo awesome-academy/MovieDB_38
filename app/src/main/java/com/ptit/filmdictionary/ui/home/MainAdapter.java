@@ -4,8 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.ptit.filmdictionary.ui.favorite.FavoriteFragment;
+
 public class MainAdapter extends FragmentPagerAdapter {
-    private static final int SUM_FRAGMENT = 1;
+    private static final int SUM_FRAGMENT = 2;
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_FAVORITE = 1;
     private static final int FRAGMENT_SETTING = 2;
@@ -20,7 +22,7 @@ public class MainAdapter extends FragmentPagerAdapter {
             case FRAGMENT_HOME:
                 return HomeFragment.getInstance();
             case FRAGMENT_FAVORITE:
-                return null;
+                return FavoriteFragment.getInstance();
             case FRAGMENT_SETTING:
                 return null;
             default:

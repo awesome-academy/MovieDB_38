@@ -68,10 +68,10 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?android:actionBarSize"
-                    android:layout_marginTop="@dimen/dp_25"
                     app:layout_collapseMode="pin"
                     app:title="@string/app_name"
-                    app:titleTextColor="@android:color/black">
+                    app:titleTextColor="@android:color/black"
+                    android:layout_marginTop="@dimen/dp_25">
 
                     <ImageView
                         android:id="@+id/image_search"

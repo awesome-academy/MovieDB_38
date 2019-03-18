@@ -15,10 +15,10 @@ import com.ptit.filmdictionary.ui.home.HomeFragment;
 import com.ptit.filmdictionary.ui.home.MainAdapter;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.
-        OnNavigationItemSelectedListener {
-    private static final int FRAGMENT_HOME = 1;
-    private static final int FRAGMENT_FAVORITE = 2;
-    private static final int FRAGMENT_SETTING = 3;
+        OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+    private static final int FRAGMENT_HOME = 0;
+    private static final int FRAGMENT_FAVORITE = 1;
+    private static final int FRAGMENT_SETTING = 2;
     private ViewPager mViewPager;
     private BottomNavigationView mNavigationView;
 
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private void initViewPager() {
         MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mainAdapter);
+        mViewPager.addOnPageChangeListener(this);
     }
 
     private void registerEvents() {
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 mViewPager.setCurrentItem(FRAGMENT_HOME);
                 return true;
             case R.id.menu_favorite:
-                return false;
+                mViewPager.setCurrentItem(FRAGMENT_FAVORITE);
+                return true;
             case R.id.menu_setting:
                 return false;
             default:
@@ -61,4 +63,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        switch (i){
+            case FRAGMENT_HOME:
+                mNavigationView.setSelectedItemId(R.id.menu_home);
+                break;
+            case FRAGMENT_FAVORITE:
+                mNavigationView.setSelectedItemId(R.id.menu_favorite);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
 }

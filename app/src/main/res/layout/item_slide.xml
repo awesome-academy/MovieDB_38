@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.releaseDate}"
-            android:textSize="@dimen/sp_20"
+            android:textSize="@dimen/sp_16"
             android:textStyle="normal"
             android:textColor="@color/color_white"
             app:layout_constraintStart_toStartOf="@id/text_title"
