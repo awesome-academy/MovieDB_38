@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_8"
-                    android:src="@drawable/ic_favorite_24dp"
+                    android:src="@{viewModel.mIsFavorite ?  @drawable/ic_favorited_24dp : @drawable/ic_favorite_24dp}"
                     app:layout_constraintBottom_toBottomOf="@id/view_one"
                     app:layout_constraintEnd_toEndOf="@id/view_one"
                     app:layout_constraintTop_toTopOf="@id/view_one" />

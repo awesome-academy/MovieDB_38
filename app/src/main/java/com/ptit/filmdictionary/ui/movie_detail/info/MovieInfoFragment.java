@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ptit.filmdictionary.R;
 import com.ptit.filmdictionary.data.model.Genre;
@@ -19,7 +20,10 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieInfoFragment extends Fragment implements GenreRecylerAdapter.ItemClickListener {
+public class MovieInfoFragment extends Fragment implements GenreRecylerAdapter.ItemClickListener,
+        MovieDetailViewModel.OnFavoriteListener {
+    private static final String STR_ADDED = "Added";
+    private static final String STR_DELETED = "Deleted";
     private MovieDetailViewModel mViewModel;
     private FragmentMovieInfoBinding mBinding;
 
@@ -37,7 +41,13 @@ public class MovieInfoFragment extends Fragment implements GenreRecylerAdapter.I
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_info, container, false);
         mBinding.setViewModel(mViewModel);
         initRecyclerView();
+        initListener();
         return mBinding.getRoot();
+    }
+
+    private void initListener() {
+        mViewModel.setFavoriteListener(this);
+        mBinding.imageFavorite.setOnClickListener(v -> mViewModel.changeFavorite());
     }
 
     private void initRecyclerView() {
@@ -56,5 +66,10 @@ public class MovieInfoFragment extends Fragment implements GenreRecylerAdapter.I
     public void onItemClick(Genre genre) {
         Intent intent = GenreActivity.getIntent(getContext(), genre.getId(), genre.getName());
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void onFavoriteClick(boolean isFavorite) {
+        Toast.makeText(getContext(), isFavorite ? STR_ADDED : STR_DELETED, Toast.LENGTH_SHORT).show();
     }
 }

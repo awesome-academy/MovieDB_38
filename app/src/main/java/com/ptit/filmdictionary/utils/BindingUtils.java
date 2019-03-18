@@ -1,6 +1,7 @@
 package com.ptit.filmdictionary.utils;
 
 import android.databinding.BindingAdapter;
+import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.os.Build;
 import android.support.v4.view.ViewPager;

@@ -115,11 +115,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return (result > 0);
     }
 
-    public boolean isFavorite(Movie movie) {
+    public boolean isFavorite(int movieId) {
         SQLiteDatabase db = getReadableDatabase();
         String[] projection = {FavoriteEntry.COLUMN_NAME_ID};
         String selection = FavoriteEntry.COLUMN_NAME_ID + SELECTION_SUFFIX;
-        String[] selectionArgs = {String.valueOf(movie.getId())};
+        String[] selectionArgs = {String.valueOf(movieId)};
         Cursor cursor = db.query(FavoriteEntry.TABLE_FAVORITE,
                 projection,
                 selection,

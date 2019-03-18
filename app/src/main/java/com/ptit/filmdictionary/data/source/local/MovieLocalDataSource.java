@@ -35,7 +35,7 @@ public class MovieLocalDataSource implements MovieDataSource.Local {
     }
 
     @Override
-    public boolean isFavorite(Movie movie) {
-        return mDbHelper.isFavorite(movie);
+    public boolean isFavorite(int movieId) {
+        return mDbHelper.isFavorite(movieId);
     }
 }

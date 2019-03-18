@@ -47,8 +47,8 @@ public class MovieRepository extends BaseRepository implements MovieDataSource.L
     }
 
     @Override
-    public boolean isFavorite(Movie movie) {
-        return mLocal.isFavorite(movie);
+    public boolean isFavorite(int movieId) {
+        return mLocal.isFavorite(movieId);
     }
 
     @Override
