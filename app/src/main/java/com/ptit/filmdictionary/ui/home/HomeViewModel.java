@@ -61,10 +61,9 @@ public class HomeViewModel extends BaseViewModel<HomeNavigator> {
         isGenresLoadedObservable = new ObservableBoolean(false);
         isTrendingLoadedObservable = new ObservableBoolean(false);
         isAllLoadedObservable = new ObservableBoolean(false);
-        loadData();
     }
 
-    private void loadData() {
+    public void loadData() {
         loadTopRateMovies();
         loadNowPlayingMovies();
         loadPopularMovies();

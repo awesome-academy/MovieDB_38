@@ -23,6 +23,7 @@ import com.ptit.filmdictionary.data.model.History;
 import com.ptit.filmdictionary.data.model.Movie;
 import com.ptit.filmdictionary.data.model.Video;
 import com.ptit.filmdictionary.ui.category.CategoryAdapter;
+import com.ptit.filmdictionary.ui.favorite.adapter.FavoriteAdapter;
 import com.ptit.filmdictionary.ui.history.adapter.HistoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.HomeCategoryAdapter;
 import com.ptit.filmdictionary.ui.home.adapter.MovieAdapter;
@@ -49,6 +50,13 @@ public class BindingUtils {
         HistoryAdapter adapter = (HistoryAdapter) recyclerView.getAdapter();
         if (adapter == null) return;
         adapter.setData(histories);
+    }
+
+    @BindingAdapter("bindFavorite")
+    public static void bindFavorite(RecyclerView recyclerView, List<Movie> movies) {
+        FavoriteAdapter adapter = (FavoriteAdapter) recyclerView.getAdapter();
+        if (adapter == null) return;
+        adapter.setData(movies);
     }
 
     @BindingAdapter("spinnerAdapter")

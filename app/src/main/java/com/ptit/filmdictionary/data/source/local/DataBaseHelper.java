@@ -23,12 +23,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String SELECTION_SUFFIX = " LIKE ?";
     private static final String SQL_CREATE_FAVORITE =
             String.format(Locale.US, "CREATE TABLE %s (%s INTEGER PRIMARY KEY," +
-                            "%s TEXT, %s TEXT, %s TEXT)",
+                            " %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)",
                     FavoriteEntry.TABLE_FAVORITE,
                     FavoriteEntry.COLUMN_NAME_ID,
                     FavoriteEntry.COLUMN_NAME_MOVIE,
                     FavoriteEntry.COLUMN_NAME_VOTE,
-                    FavoriteEntry.COLUMN_NAME_POSTER);
+                    FavoriteEntry.COLUMN_NAME_POSTER,
+                    FavoriteEntry.COLUMN_NAME_RELEASE_DATE,
+                    FavoriteEntry.COLUMN_NAME_OVERVIEW);
     private static final String SQL_CREATE_HISTORY =
             String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT)",
                     HistoryEntity.TABLE_HISTORY,
@@ -64,7 +66,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 FavoriteEntry.COLUMN_NAME_ID,
                 FavoriteEntry.COLUMN_NAME_MOVIE,
                 FavoriteEntry.COLUMN_NAME_VOTE,
-                FavoriteEntry.COLUMN_NAME_POSTER
+                FavoriteEntry.COLUMN_NAME_POSTER,
+                FavoriteEntry.COLUMN_NAME_RELEASE_DATE,
+                FavoriteEntry.COLUMN_NAME_OVERVIEW
         };
         Cursor cursor = db.query(FavoriteEntry.TABLE_FAVORITE,
                 projection,
@@ -83,11 +87,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     .getColumnIndexOrThrow(FavoriteEntry.COLUMN_NAME_VOTE));
             String poster_path = cursor.getString(cursor
                     .getColumnIndexOrThrow(FavoriteEntry.COLUMN_NAME_POSTER));
+            String release_date = cursor.getString(cursor
+                    .getColumnIndexOrThrow(FavoriteEntry.COLUMN_NAME_RELEASE_DATE));
+            String overview = cursor.getString(cursor
+                    .getColumnIndexOrThrow(FavoriteEntry.COLUMN_NAME_OVERVIEW));
             Movie movie = new Movie();
             movie.setId(id);
             movie.setTitle(title);
             movie.setVoteAverage(vote_average);
             movie.setPosterPath(poster_path);
+            movie.setReleaseDate(release_date);
+            movie.setOverview(overview);
 
             movies.add(movie);
             cursor.moveToNext();
@@ -103,6 +113,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(FavoriteEntry.COLUMN_NAME_MOVIE, movie.getTitle());
         values.put(FavoriteEntry.COLUMN_NAME_VOTE, movie.getVoteAverage());
         values.put(FavoriteEntry.COLUMN_NAME_POSTER, movie.getPosterPath());
+        values.put(FavoriteEntry.COLUMN_NAME_RELEASE_DATE, movie.getReleaseDate());
+        values.put(FavoriteEntry.COLUMN_NAME_OVERVIEW, movie.getOverview());
         long result = db.insert(FavoriteEntry.TABLE_FAVORITE, null, values);
         return (result > 0);
     }

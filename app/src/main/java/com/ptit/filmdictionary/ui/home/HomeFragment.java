@@ -60,6 +60,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHomeViewModel.setNavigator(this);
+        mHomeViewModel.loadData();
     }
 
     @Override
@@ -215,6 +216,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onDestroy() {
         mHomeViewModel.dispose();
+        sInstance = null;
         super.onDestroy();
     }
 
@@ -242,4 +244,5 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void onItemClick(Genre genre) {
         startGenreActivity(genre.getId(), genre.getName());
     }
+
 }
